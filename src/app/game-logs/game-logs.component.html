@@ -1,0 +1,14 @@
+<div class="h-screen bg-gray-700 p-5 overflow-hidden">
+  <div class="text-gray-300 text-center font-bold border-b-2 mb-2">Logs du jeu</div>
+  <div class="h-full overflow-y-auto">
+    <div class="text-white flex" *ngFor="let log of logs">
+      <div class="text-yellow-300">
+        <ng-container *ngIf="log.type === 'hero'">
+          {{ log.content.hero }}
+        </ng-container>
+      </div>
+      &nbsp;
+      {{ log.content.message }}
+    </div>
+  </div>
+</div>
