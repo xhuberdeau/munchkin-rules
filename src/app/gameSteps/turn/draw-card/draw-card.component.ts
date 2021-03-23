@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Card } from '../../../game-types.model';
 import { CardService } from '../../../services/card.service';
 import { PlayersService } from '../../../services/players.service';
+import { InventoryService } from '../../../services/inventory.service';
 import { PlayerAwareComponent } from '../player-aware';
 
 @Component({
@@ -11,7 +12,11 @@ import { PlayerAwareComponent } from '../player-aware';
 })
 export class DrawCardComponent extends PlayerAwareComponent implements OnInit {
   card: Card;
-  constructor(protected playersService: PlayersService, private cardService: CardService) {
+  constructor(
+    protected playersService: PlayersService,
+              private cardService: CardService,
+              private inventoryService: InventoryService
+  ) {
     super(playersService);
   }
 
@@ -19,4 +24,7 @@ export class DrawCardComponent extends PlayerAwareComponent implements OnInit {
     this.card = this.cardService.drawCard();
   }
 
+  saveCard() {
+    this.inventoryService.addCard(this.card, this.player);
+  }
 }

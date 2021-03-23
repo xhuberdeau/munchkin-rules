@@ -6,10 +6,8 @@ import { Card } from '../game-types.model';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements Card, OnInit {
-  @Input() title;
-  @Input() description;
-  @Input() type;
+export class CardComponent implements OnInit {
+  @Input() card: Card;
   constructor() { }
 
   ngOnInit(): void {

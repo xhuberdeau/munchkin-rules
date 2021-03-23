@@ -7,10 +7,14 @@ import { GameLoggerService } from './game-logger.service';
   providedIn: 'root'
 })
 export class PlayersService {
+
   private currentPlayerSubject: BehaviorSubject<Player> = new BehaviorSubject<Player>(null);
   currentPlayer = this.currentPlayerSubject.asObservable();
   private players: Player[] = [];
-  constructor(private logger: GameLoggerService) { }
+  constructor(private logger: GameLoggerService) {
+    this.addPlayer('Peter Parker',  'Homme');
+    this.addPlayer('Emma Watson',  'Femme');
+  }
 
   addPlayer(name: string, sex: PlayerSex): Player {
     const newPlayer = {
@@ -18,6 +22,7 @@ export class PlayersService {
       turn: this.players.length + 1,
       health: 3,
       inventory: [],
+      equipedCards: [],
       sex,
     };
     this.players = [...this.players, newPlayer];
@@ -29,6 +34,12 @@ export class PlayersService {
       hero: newPlayer.name,
     });
     return newPlayer;
+  }
+
+  updatePlayer(player: Player) {
+    console.log('update player', player);
+    const playerIndex = this.players.findIndex((p) => p.name === player.name);
+    this.players[playerIndex] = player;
   }
 
   getPlayers(): Player[] {

@@ -1,4 +1,4 @@
-<h2>Joueur {{ player.name }}</h2>
+<div class="text-center font-extrabold text-xl border-b-2 border-black">Joueur {{ player.name }}</div>
 <router-outlet></router-outlet>
-<app-inventory></app-inventory>
-<app-equiped-cards></app-equiped-cards>
+<app-inventory [player]="player"></app-inventory>
+<app-equiped-cards [player]="player"></app-equiped-cards>

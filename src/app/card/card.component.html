@@ -1,10 +1,10 @@
-<div class="">
+<div class="rounded-lg border-8  p-2 w-64" [ngClass]="{'border-green-400': card.type == 'equipment'}">
   <!-- card title -->
-  <div>
-    {{ title }}
+  <div class="border-b-2 text-center font-bold">
+    {{ card.title }}
   </div>
   <!-- card description -->
-  <div>
-    {{ description }}
+  <div class="italic">
+    {{ card.description }}
   </div>
 </div>

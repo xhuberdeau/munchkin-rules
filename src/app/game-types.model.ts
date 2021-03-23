@@ -1,5 +1,9 @@
+export enum CardTypes {
+  Equipment = 'equipment',
+}
+
 export interface Card {
-  type: 'equipment';
+  type: CardTypes;
   title: string;
   description: string;
 }
@@ -7,11 +11,13 @@ export interface Card {
 export type PlayerSex = 'Homme' | 'Femme';
 
 export type Inventory = Card[];
+export type EquipedCards = Card[];
 
 export interface Hero {
   name: string;
   health: number;
   inventory: Inventory;
+  equipedCards: EquipedCards;
   sex: PlayerSex;
 }
 

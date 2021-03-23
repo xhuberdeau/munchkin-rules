@@ -1,2 +1,10 @@
-<h1>Vous obtenez la carte</h1>
-<app-card [title]="card.title" [description]="card.description"></app-card>
+<div class="centered-container">
+  <div>
+    <h1>Vous obtenez la carte</h1>
+    <app-card [card]="card"></app-card>
+    <button class="button" (click)="saveCard()">
+      Obtenir
+    </button>
+  </div>
+</div>
+

@@ -1,1 +1,6 @@
-<p>inventory works!</p>
+<div class="absolute bottom-0 border-4 border-indigo-800 w-4/5 h-16">
+  <div class="text-center -m-6">Inventaire</div>
+  <div *ngFor="let card of player.inventory">
+    {{ card.title }}
+  </div>
+</div>

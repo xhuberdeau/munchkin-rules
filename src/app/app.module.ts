@@ -12,6 +12,7 @@ import { MapComponent } from './map/map.component';
 import { TurnComponent } from './gameSteps/turn/turn.component';
 import { EquipedCardsComponent } from './equiped-cards/equiped-cards.component';
 import { DrawCardComponent } from './gameSteps/turn/draw-card/draw-card.component';
+import { ChooseRoomComponent } from './gameSteps/turn/choose-room/choose-room.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DrawCardComponent } from './gameSteps/turn/draw-card/draw-card.componen
     MapComponent,
     TurnComponent,
     EquipedCardsComponent,
-    DrawCardComponent
+    DrawCardComponent,
+    ChooseRoomComponent,
   ],
   imports: [
     BrowserModule,

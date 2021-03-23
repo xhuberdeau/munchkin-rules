@@ -1,1 +1,6 @@
-<p>equiped-cards works!</p>
+<div class="absolute top-7 left-0 border-4 border-red-500 w-16 equiped-cards">
+  <div class="top-96 left-16 absolute">Cartes équipées</div>
+  <div *ngFor="let card of player.equipedCards">
+    {{ card.title }}
+  </div>
+</div>
