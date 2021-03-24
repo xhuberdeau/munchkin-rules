@@ -1,0 +1,12 @@
+.equip-cards-step {
+  .cards-list {
+    max-height: 70vh;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    row-gap: 2rem;
+
+    height: 100%;
+  }
+}

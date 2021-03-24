@@ -1,0 +1,6 @@
+<div class="inventory" *ngIf="player">
+  <div>Inventaire</div>
+  <div class="cards">
+    <app-small-card  *ngFor="let card of player.inventory" [card]="card"></app-small-card>
+  </div>
+</div>

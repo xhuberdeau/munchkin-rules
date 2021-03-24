@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.button {
+  padding: 0.5rem;
+  background: #E1D5BB;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #E1D5BB;
+}
+
+.equipment {
+  border-color: orange!important;
+  &.effect {
+    color: orange!important;
+  }
+}
+
+

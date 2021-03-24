@@ -1,0 +1,12 @@
+.inventory {
+  border: 2px solid orange;
+  min-height: 8vh;
+  max-height: 16vh;
+  overflow-x: auto;
+
+  .cards {
+    display: flex;
+    column-gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+}

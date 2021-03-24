@@ -1,0 +1,20 @@
+<div class="flex">
+  <button class="button" (click)="prepareNewPlayer()">Ajouter un joueur</button>
+  <button class="button" routerLink="/turn/drawCard">Lancer le jeu</button>
+</div>
+<div *ngIf="isPreparingNewPlayer" class="mt-5">
+    <div>
+      <label for="name">Nom du joueur</label>
+      <input id="name" type="text" [(ngModel)]="playerName" />
+    </div>
+    <div>
+      <input type="radio" id="homme" name="sex" value="Homme" [(ngModel)]="playerSex">
+      <label for="homme">Homme</label>
+    </div>
+    <div>
+      <input type="radio" id="femme" name="sex" value="Femme" [(ngModel)]="playerSex">
+      <label for="femme">Femme</label>
+    </div>
+    <button class="button" (click)="addPlayer()">Créer le joueur</button>
+</div>
+

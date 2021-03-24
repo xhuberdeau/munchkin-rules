@@ -1,0 +1,14 @@
+<div class="logs">
+  <div class="title">Logs du jeu</div>
+  <div class="logs-content">
+    <div class="log" *ngFor="let log of logs">
+      <div class="highlighted">
+        <ng-container *ngIf="log.type === 'hero'">
+          {{ log.content.hero }}
+        </ng-container>
+      </div>
+      &nbsp;
+      {{ log.content.message }}
+    </div>
+  </div>
+</div>

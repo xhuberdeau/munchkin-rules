@@ -1,0 +1,17 @@
+<div class="turn">
+  <div class="header">
+    <app-hero-stats [player]="player"></app-hero-stats>
+  </div>
+  <div class="equiped-cards">
+    <app-equiped-cards [player]="player"></app-equiped-cards>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="inventory">
+    <app-inventory [player]="player"></app-inventory>
+  </div>
+
+</div>
+
+

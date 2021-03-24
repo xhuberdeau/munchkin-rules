@@ -1,0 +1,15 @@
+<div class="card {{card.category}}">
+  <!-- card title -->
+  <div class="title">
+    {{ card.title }}
+  </div>
+  <!-- card description -->
+  <div class="description">
+    {{ card.description }}
+  </div>
+
+  <!-- card effectDescription -->
+  <div *ngIf="cardDescription" class="{{ card.category }} effect">
+    {{ cardDescription }}
+  </div>
+</div>

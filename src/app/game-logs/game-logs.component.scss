@@ -1,0 +1,28 @@
+.logs {
+  background: #2a4158;
+  padding: 1rem;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+
+  .title {
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid white;
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+    color: white;
+  }
+
+  .logs-content {
+    overflow-y: auto;
+  }
+
+  .log {
+    display: flex;
+
+    .highlighted {
+      color: yellow;
+    }
+  }
+}
