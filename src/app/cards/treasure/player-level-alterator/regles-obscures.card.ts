@@ -4,7 +4,7 @@ export class ReglesObscuresCard extends AbstractPlayerLevelAlteratorCard {
   constructor() {
     super({
       title: 'Invocation de règles obscures',
-      effectDescription: '+1 niveau',
+      description: '+1 niveau',
       levelModifier: 1,
     });
   }

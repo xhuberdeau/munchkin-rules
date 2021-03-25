@@ -5,6 +5,7 @@ export class IntelligentCard extends AbstractMonsterLevelAlteratorCard  {
       super({
         title: 'Intelligent',
         levelModifier: 5,
+        description: 'Le monstre ciblé gagne 5 niveaux',
       });
     }
 }

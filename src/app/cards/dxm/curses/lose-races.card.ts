@@ -3,7 +3,7 @@ import { AbstractCurseCard } from './abstract-curse.card';
 
 export class LoseRacesCard extends AbstractCurseCard {
   constructor() {
-    super({effectDescription: 'Perdez toutes vos races'});
+    super({description: 'Perdez toutes vos races'});
   }
 
   applyEffect(player: IPlayer): IPlayer {

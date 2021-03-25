@@ -5,6 +5,7 @@ export class BebeCard extends AbstractMonsterLevelAlteratorCard  {
       super({
         title: 'Bébé',
         levelModifier: -5,
+        description: 'Le monstre ciblé perd 5 niveaux',
       });
     }
 }

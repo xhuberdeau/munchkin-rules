@@ -5,6 +5,7 @@ export class VenerableCard extends AbstractMonsterLevelAlteratorCard  {
       super({
         title: 'Vénérable',
         levelModifier: 10,
+        description: 'Le monstre ciblé gagne 10 niveaux',
       });
     }
 }
