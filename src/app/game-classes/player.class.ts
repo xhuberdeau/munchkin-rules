@@ -52,7 +52,7 @@ export class Player implements IPlayer {
 
   alterPower(powerModifier: number): IPlayer {
     const nextPower = this.power + powerModifier;
-    return new Player({...this, power: nextPower >= 1 ? nextPower : 1});
+    return new Player({...this, power: nextPower >= 1 ? nextPower : 1, combatPower: nextPower >= 1 ? nextPower : 1});
   }
 
   alterCombatPower(powerModifier: number): IPlayer {

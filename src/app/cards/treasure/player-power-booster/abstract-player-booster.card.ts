@@ -10,7 +10,7 @@ export abstract class AbstractPlayerBoosterCard extends AbstractTreasureEffectCa
   }
 
   applyEffect(player: IPlayer): IPlayer {
-    return player.alterPower(this.powerModifier);
+    return player.alterCombatPower(this.powerModifier);
   }
 }
 

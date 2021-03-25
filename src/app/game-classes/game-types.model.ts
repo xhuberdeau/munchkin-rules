@@ -174,6 +174,7 @@ export interface IPlayer {
   loseAllClasses: () => IPlayer;
   loseAllRaces: () => IPlayer;
   alterPower: (powerModifier: number) => IPlayer;
+  alterCombatPower: (powerModifier: number) => IPlayer;
   removeCard: (card: ICard) => IPlayer;
 }
 
