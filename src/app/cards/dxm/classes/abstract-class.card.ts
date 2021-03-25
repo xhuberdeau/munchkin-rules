@@ -8,6 +8,6 @@ export abstract class AbstractClassCard extends AbstractDxmCard implements IClas
     super(cardConfig);
   }
 
-  abstract applyEffect(player: IPlayer): void;
+  abstract applyEffect(player: IPlayer): IPlayer;
 }
 

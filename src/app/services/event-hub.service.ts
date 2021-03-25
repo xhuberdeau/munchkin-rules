@@ -46,8 +46,8 @@ export class EventHubService {
 
   private onGameJoin(event: IEvent): void {
     const player = this.playersService.addPlayer(event.playerName, event.playerSex);
-    this.playersService.stackCards(player, this.cardService.drawDxmCards(3));
-    this.playersService.stackCards(player, this.cardService.drawTreasureCards(3));
+    this.playersService.stackCards(player, this.cardService.drawDxmCards(30));
+    this.playersService.stackCards(player, this.cardService.drawTreasureCards(30));
     this.gameLoggerService.addPlayerLog({ type: LogType.Player, player, message: 'a rejoint la partie.'});
   }
 
@@ -56,20 +56,24 @@ export class EventHubService {
     this.router.navigateByUrl('/turn/map');
     const addedCards = this.playersService.unstackCurrentPlayerStackedCards();
     addedCards.forEach((card) => {
-      this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${card.title}`});
+      this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)}`});
     });
   }
 
   private onCardEquip(event: IEvent): void {
     const card = this.cardService.findCardById(event.card.id);
     this.playersService.updatePlayer(this.playersService.currentPlayerSync.equipCard(card));
-    this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a équipé la carte ${card.title}`});
+    this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a équipé la carte ${this.addStandOutLog(card.title)}`});
   }
 
   private onCardPlacedOnMapTile(event: IEvent): void {
     const card = this.cardService.findCardById(event.card.id);
     this.playersService.updatePlayer(this.playersService.currentPlayerSync.removeCard(card));
     this.mapService.placeCardOnMapTile(this.playersService.currentPlayerSync, card as ITrapCard, event.tile);
-    this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a placé la carte ${card.title} dans la ${event.tile.name}`});
+    this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a placé la carte ${this.addStandOutLog(card.title)} dans la ${this.addStandOutLog(event.tile.name)}`});
+  }
+
+  private addStandOutLog(val: string): string {
+    return `<span class="stand-out-log">${val}</span>`;
   }
 }

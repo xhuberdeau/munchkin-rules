@@ -8,6 +8,6 @@ export abstract class AbstractRaceCard extends AbstractDxmCard implements IRaceC
     super(cardConfig);
   }
 
-  abstract applyEffect(player: IPlayer): void;
+  abstract applyEffect(player: IPlayer): IPlayer;
 }
 
