@@ -1,6 +1,6 @@
 import { AbstractMonsterLevelAlteratorCard } from './abstract-monster-level-alterator.card';
 
-class VenerableCard extends AbstractMonsterLevelAlteratorCard  {
+export class VenerableCard extends AbstractMonsterLevelAlteratorCard  {
     constructor() {
       super({
         title: 'Vénérable',

@@ -1,6 +1,6 @@
 import { AbstractPlayerLevelAlteratorCard } from './abstract-player-level-alterator.card';
 
-class ReglesObscuresCard extends AbstractPlayerLevelAlteratorCard {
+export class ReglesObscuresCard extends AbstractPlayerLevelAlteratorCard {
   constructor() {
     super({
       title: 'Invocation de règles obscures',

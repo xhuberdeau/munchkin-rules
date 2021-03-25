@@ -11,6 +11,7 @@ export enum CardCategories {
   Curse = 'curse',
   MonsterLevelAlterator = 'monsterLevelAlterator',
   PlayerLevelAlterator = 'playerLevelAlterator',
+  PlayerPowerAlterator = 'playerPowerAlterator',
 
   // todo: game modifier trésor bleu
   // todo: equipement trésor violet
@@ -105,6 +106,13 @@ export interface IPlayerLevelAlterator extends INonEquipableCard, ITreasureCard,
   levelModifier: number;
 }
 
+export interface IPlayerPowerAlterator extends INonEquipableCard, ITreasureCard, IEffectCard {
+  isEquipable: false;
+  type: CardTypes.Treasure;
+  category: CardCategories.PlayerPowerAlterator;
+  powerModifier: number;
+}
+
 export interface IRaceCard extends IDXMCard, IEquipableCard {
   type: CardTypes.DXM;
   category: CardCategories.Race;
@@ -132,6 +140,7 @@ export type Inventory = ICard[];
 export type EquipedCards = IEffectCard[];
 
 export interface IPlayer {
+  id: string;
   races: Races[];
   classes: Classes[];
   power: number;

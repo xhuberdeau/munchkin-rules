@@ -1,7 +1,7 @@
 import { BodyParts, ObjectSizes } from '../../../game-classes/game-types.model';
 import { AbstractEquipmentCard } from './abstract-equipment.card';
 
-export class PaperSwordEquipment extends AbstractEquipmentCard {
+export class PaperSwordCard extends AbstractEquipmentCard {
   constructor() {
     super({
       title: 'Épée en papier',

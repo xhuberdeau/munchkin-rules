@@ -1,6 +1,6 @@
 <div class="flex">
   <button class="button" (click)="prepareNewPlayer()">Ajouter un joueur</button>
-  <button class="button" routerLink="/turn/drawCard">Lancer le jeu</button>
+  <button class="button" (click)="startGame()">Lancer le jeu</button>
 </div>
 <div *ngIf="isPreparingNewPlayer" class="mt-5">
     <div>

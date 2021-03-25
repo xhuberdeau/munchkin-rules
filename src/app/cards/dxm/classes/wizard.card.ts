@@ -1,7 +1,7 @@
 import { Classes, IPlayer } from '../../../game-classes/game-types.model';
 import { AbstractClassCard } from './abstract-class.card';
 
-class WizardCard extends AbstractClassCard {
+export class WizardCard extends AbstractClassCard {
   constructor() {
     super({title: 'Magicien'});
   }

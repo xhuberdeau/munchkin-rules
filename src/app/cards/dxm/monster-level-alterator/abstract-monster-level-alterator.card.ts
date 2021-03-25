@@ -7,7 +7,7 @@ export abstract class AbstractMonsterLevelAlteratorCard extends AbstractDxmCard 
   levelModifier: number;
   constructor(cardConfig: Partial<AbstractMonsterLevelAlteratorCard>) {
     super(cardConfig);
-    this.effectDescription = `${this.levelModifier} au monstre`;
+    this.effectDescription = `${this.levelModifier > 0 ? '+' : ''} ${this.levelModifier} au monstre`;
   }
 
   applyEffect(monster: IMonsterCard): IMonsterCard {

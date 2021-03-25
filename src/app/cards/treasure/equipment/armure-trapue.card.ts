@@ -1,7 +1,7 @@
 import { BodyParts, ObjectSizes } from '../../../game-classes/game-types.model';
 import { AbstractEquipmentCard } from './abstract-equipment.card';
 
-export class ArmureTrapue extends AbstractEquipmentCard {
+export class ArmureTrapueCard extends AbstractEquipmentCard {
   constructor() {
     super({
       title: 'Armure Trapue',

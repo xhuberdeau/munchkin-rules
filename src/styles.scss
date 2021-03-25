@@ -19,4 +19,52 @@ html, body {
   }
 }
 
+.curse {
+  border-color: green!important;
+  &.effect {
+    color: green!important;
+  }
+}
+
+.curse {
+  border-color: green!important;
+  &.effect {
+    color: green!important;
+  }
+}
+
+.monsterLevelAlterator {
+  border-color: dodgerblue!important;
+  &.effect {
+    color: dodgerblue!important;
+  }
+}
+
+.playerPowerAlterator {
+  border-color: red!important;
+  &.effect {
+    color: red!important;
+  }
+}
+
+.playerLevelAlterator {
+  border-color: lightseagreen!important;
+  &.effect {
+    color: lightseagreen!important;
+  }
+}
+
+.race {
+  border-color: saddlebrown!important;
+  &.effect {
+    color: saddlebrown!important;
+  }
+}
+
+.class {
+  border-color: grey!important;
+  &.effect {
+    color: grey!important;
+  }
+}
 

@@ -1,25 +1,20 @@
 import { EventEmitter, Injectable } from '@angular/core';
-
-type LogType = 'hero';
-export type Log = {
-  type: LogType;
-  content: {
-    message: string;
-    hero: string;
-  };
-};
-
+import { IGeneralLog, ILog, IPlayerLog } from '../game-classes/logs.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameLoggerService {
-  private logsEmitter: EventEmitter<Log> = new EventEmitter<Log>();
+  private logsEmitter: EventEmitter<ILog> = new EventEmitter<ILog>();
   logs = this.logsEmitter.asObservable();
 
   constructor() { }
 
-  addLog(type: LogType, content: any): void {
-    this.logsEmitter.emit({type, content});
+  addPlayerLog(log: IPlayerLog): void {
+    this.logsEmitter.emit(log);
+  }
+
+  addGeneralLog(log: IGeneralLog): void {
+    this.logsEmitter.emit(log);
   }
 }

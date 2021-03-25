@@ -1,6 +1,6 @@
 import { AbstractPlayerLevelAlteratorCard } from './abstract-player-level-alterator.card';
 
-class PotionMachismeCard extends AbstractPlayerLevelAlteratorCard {
+export class PotionMachismeCard extends AbstractPlayerLevelAlteratorCard {
   constructor() {
     super({
       title: 'Potion de machisme triomphant',

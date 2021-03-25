@@ -1,7 +1,7 @@
 import { IPlayer, Races } from '../../../game-classes/game-types.model';
 import { AbstractRaceCard } from './abstract-race.card';
 
-class ElfCard extends AbstractRaceCard {
+export class ElfCard extends AbstractRaceCard {
   constructor() {
     super({title: 'Elfe'});
   }

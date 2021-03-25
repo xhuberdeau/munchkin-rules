@@ -4,7 +4,7 @@ import { AbstractDxmCard } from '../abstract-dxm.card';
 export abstract class AbstractClassCard extends AbstractDxmCard implements IClassCard {
   category: CardCategories.Class = CardCategories.Class;
   isEquipable: true = true;
-  constructor(cardConfig: Partial<IClassCard>) {
+  constructor(cardConfig: Partial<AbstractClassCard>) {
     super(cardConfig);
   }
 

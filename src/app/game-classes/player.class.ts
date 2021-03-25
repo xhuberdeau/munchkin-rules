@@ -11,6 +11,7 @@ import {
   Races
 } from './game-types.model';
 import { getRandomInList } from '../utils/random';
+import { v4 as uuidv4 } from 'uuid';
 
 export class Player implements IPlayer {
   equipedCards: EquipedCards = [];
@@ -24,9 +25,11 @@ export class Player implements IPlayer {
   level = 1;
   power = 1;
   combatPower = 1;
+  id: string;
 
   constructor(playerConfig: Partial<IPlayer>) {
     Object.assign(this, playerConfig);
+    this.id = uuidv4();
   }
 
   getEquipableCards(): IEquipableCard[] {

@@ -1,14 +1,14 @@
 import { BodyParts, ObjectSizes } from '../../../game-classes/game-types.model';
 import { AbstractEquipmentCard } from './abstract-equipment.card';
 
-export class ArmureGluante extends AbstractEquipmentCard {
+export class BottesHemorroidesCard extends AbstractEquipmentCard {
   constructor() {
     super({
-      title: 'Armure gluante',
-      effectDescription: '+1 attaque',
-      bodyPart: BodyParts.Armor,
+      title: 'Bottes de convocation d\'Hémorroïdes',
+      effectDescription: '+2 attaque',
+      bodyPart: BodyParts.Shoes,
       objectSize: ObjectSizes.Small,
-      powerModifier: 1,
+      powerModifier: 2,
     });
   }
 }

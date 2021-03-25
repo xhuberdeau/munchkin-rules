@@ -1,0 +1,11 @@
+<div class="new-cards-notifier" *ngIf="showNewCards">
+  <div class="backdrop"></div>
+  <div class="content">
+    <h1>Vous obtenez les cartes</h1>
+    <div class="cards-list">
+      <app-card *ngFor="let card of newCards" [card]="card"></app-card>
+    </div>
+    <button class="button" (click)="close()">Bien reçu</button>
+  </div>
+</div>
+

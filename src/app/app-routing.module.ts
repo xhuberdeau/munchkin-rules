@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CreatePlayersComponent } from './game-steps/create-players/create-players.component';
 import { ChooseRoomComponent } from './game-steps/turn/choose-room/choose-room.component';
-import { DrawCardComponent } from './game-steps/turn/draw-card/draw-card.component';
+import { NewCardsNotifierComponent } from './new-cards-notifier/new-cards-notifier.component';
 import { EquipCardsComponent } from './game-steps/turn/equip-cards/equip-cards.component';
 import { TurnComponent } from './game-steps/turn/turn.component';
+import { MapComponent } from './map/map.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/create-players', pathMatch: 'full' },
@@ -16,8 +17,12 @@ const routes: Routes = [
         component: TurnComponent
       },
       {
+        path: 'map',
+        component: MapComponent
+      },
+      {
         path: 'drawCard',
-        component: DrawCardComponent,
+        component: NewCardsNotifierComponent,
       },
       {
         path: 'equipCards',
