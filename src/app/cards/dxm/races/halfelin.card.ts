@@ -1,4 +1,5 @@
 import { IPlayer, Races } from '../../../game-classes/game-types.model';
+import { Player } from '../../../game-classes/player.class';
 import { AbstractRaceCard } from './abstract-race.card';
 
 export class HalfelinCard extends AbstractRaceCard {
@@ -6,7 +7,7 @@ export class HalfelinCard extends AbstractRaceCard {
     super({title: 'Halfelin'});
   }
 
-  applyEffect(player: IPlayer): void {
-    player.races = [...player.races, Races.Halfelin];
+  applyEffect(player: IPlayer): IPlayer {
+    return new Player({...player, races: [...player.races, Races.Halfelin]});
   }
 }
