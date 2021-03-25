@@ -12,9 +12,7 @@ import { MapComponent } from './map/map.component';
 import { TurnComponent } from './game-steps/turn/turn.component';
 import { EquipedCardsComponent } from './equiped-cards/equiped-cards.component';
 import { NewCardsNotifierComponent } from './new-cards-notifier/new-cards-notifier.component';
-import { ChooseRoomComponent } from './game-steps/turn/choose-room/choose-room.component';
 import { SmallCardComponent } from './small-card/small-card.component';
-import { EquipCardsComponent } from './game-steps/turn/equip-cards/equip-cards.component';
 import { HeroStatsComponent } from './hero-stats/hero-stats.component';
 
 @NgModule({
@@ -28,9 +26,7 @@ import { HeroStatsComponent } from './hero-stats/hero-stats.component';
     TurnComponent,
     EquipedCardsComponent,
     NewCardsNotifierComponent,
-    ChooseRoomComponent,
     SmallCardComponent,
-    EquipCardsComponent,
     HeroStatsComponent,
   ],
   imports: [

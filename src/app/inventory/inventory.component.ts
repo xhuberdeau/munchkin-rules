@@ -13,4 +13,7 @@ export class InventoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onDragStart($event: DragEvent, card): void {
+    $event.dataTransfer.setData('text/plain', JSON.stringify(card));
+  }
 }

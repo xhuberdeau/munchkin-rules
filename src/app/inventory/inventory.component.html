@@ -1,6 +1,6 @@
 <div class="inventory" *ngIf="player">
   <div>Inventaire</div>
   <div class="cards">
-    <app-small-card  *ngFor="let card of player.inventory" [card]="card"></app-small-card>
+    <app-small-card draggable="true" (dragstart)="onDragStart($event, card)" *ngFor="let card of player.inventory" [card]="card"></app-small-card>
   </div>
 </div>

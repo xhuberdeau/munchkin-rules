@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { dxmCards, monsterCards, treasureCards } from '../cards/cards';
-import { IDXMCard, IMonsterCard, ITreasureCard } from '../game-classes/game-types.model';
+import { ICard, IDXMCard, IMonsterCard, ITreasureCard } from '../game-classes/game-types.model';
 import { getRandomInList } from '../utils/random';
 
 @Injectable({
@@ -10,6 +10,8 @@ export class CardService {
   private treasureDeck: ITreasureCard[] = treasureCards;
   private monsterDeck: IMonsterCard[] = monsterCards;
   private dxmDeck: IDXMCard[] = dxmCards;
+
+  private allCards = [...this.treasureDeck, ...this.monsterDeck, ...this.dxmDeck];
 
   constructor() { }
 
@@ -33,5 +35,9 @@ export class CardService {
     }
 
     return cards;
+  }
+
+  findCardById(cardId: string): ICard {
+    return this.allCards.find((c) => c.id === cardId);
   }
 }

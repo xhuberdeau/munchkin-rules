@@ -52,6 +52,20 @@ export interface ICard {
   isEquipable: boolean;
 }
 
+const traps: CardCategories[] = [
+  CardCategories.MonsterLevelAlterator,
+  CardCategories.Curse,
+  CardCategories.PlayerLevelAlterator,
+  CardCategories.PlayerPowerAlterator];
+
+export interface ITrapCard extends ICard {
+  category: CardCategories.PlayerPowerAlterator
+    | CardCategories.PlayerLevelAlterator
+    | CardCategories.Curse
+    | CardCategories.MonsterLevelAlterator
+  ;
+}
+
 export interface INonEquipableCard extends ICard {
   isEquipable: false;
 }
@@ -164,9 +178,12 @@ export interface IPlayer {
   loseAllClasses: () => IPlayer;
   loseAllRaces: () => IPlayer;
   alterPower: (powerModifier: number) => IPlayer;
+  removeCard: (card: ICard) => IPlayer;
 }
 
 export const isEquipableCard = (card: ICard): card is IEquipableCard => card.isEquipable;
 export const isEquipmentCard = (card: ICard): card is IEquipmentCard => card.category === CardCategories.Equipment;
-export const isEffectCard = (card: ICard): card is IEffectCard => (card as IEffectCard).applyEffect !== undefined;
+
+export const isTrapCard = (card: ICard): card is ITrapCard => traps.includes(card.category);
+export const isEffectCard = (card: ICard): card is IEffectCard => (card as IEffectCard).effectDescription !== undefined;
 export const isMonsterCard = (card: ICard): card is IMonsterCard => card.type === CardTypes.Monster;

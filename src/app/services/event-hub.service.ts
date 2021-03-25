@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventTypes, IEvent } from '../game-classes/events.model';
+import { ITrapCard } from '../game-classes/game-types.model';
 import { LogType } from '../game-classes/logs.model';
 import { CardService } from './card.service';
 import { EventDispatcherService } from './event-dispatcher.service';
 import { GameLoggerService } from './game-logger.service';
+import { MapService } from '../map/map.service';
 import { PlayersService } from './players.service';
 
 @Injectable({
@@ -18,6 +20,7 @@ export class EventHubService {
     private playersService: PlayersService,
     private cardService: CardService,
     private router: Router,
+    private mapService: MapService,
   ) {
     this.eventDispatcher.events.subscribe((event) => {
       this.treatEvent(event);
@@ -31,6 +34,12 @@ export class EventHubService {
         break;
       case EventTypes.GameStart:
         this.onGameStart();
+        break;
+      case EventTypes.EquipCard:
+        this.onCardEquip(event);
+        break;
+      case EventTypes.PlaceCardOnMapTile:
+        this.onCardPlacedOnMapTile(event);
         break;
     }
   }
@@ -49,5 +58,18 @@ export class EventHubService {
     addedCards.forEach((card) => {
       this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${card.title}`});
     });
+  }
+
+  private onCardEquip(event: IEvent): void {
+    const card = this.cardService.findCardById(event.card.id);
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.equipCard(card));
+    this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a équipé la carte ${card.title}`});
+  }
+
+  private onCardPlacedOnMapTile(event: IEvent): void {
+    const card = this.cardService.findCardById(event.card.id);
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.removeCard(card));
+    this.mapService.placeCardOnMapTile(this.playersService.currentPlayerSync, card as ITrapCard, event.tile);
+    this.gameLoggerService.addPlayerLog({ type: LogType.Player, player: this.playersService.currentPlayerSync, message: `a placé la carte ${card.title} dans la ${event.tile.name}`});
   }
 }

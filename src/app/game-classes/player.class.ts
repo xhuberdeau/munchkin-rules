@@ -143,4 +143,8 @@ export class Player implements IPlayer {
   private getEquipments(): IEquipmentCard[] {
     return this.equipedCards.filter((isEquipmentCard));
   }
+
+  removeCard(card: ICard): IPlayer {
+    return new Player({...this, inventory: this.inventory.filter((c) => c.id !== card.id)});
+  }
 }
