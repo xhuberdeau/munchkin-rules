@@ -49,20 +49,33 @@ export class PlayersService {
     this.playerStackedCards[player.id] = [...this.playerStackedCards[player.id], ...cards];
   }
 
-  private broadcastPlayer(player: IPlayer): void {
-    this.currentPlayerSubject.next(player);
-    this.currentPlayerSync = player;
-  }
-
   unstackCurrentPlayerStackedCards(): ICard[] {
     const cards = this.playerStackedCards[this.currentPlayerSync.id];
-    this.playerObtainedCardsService.notifyPlayerNewCards(cards);
-    cards.forEach((card) => {
-      this.updatePlayer(this.currentPlayerSync.addCardToInventory(card));
-    });
+    if (cards && cards.length > 0) {
+      this.playerObtainedCardsService.notifyPlayerNewCards(cards);
+      cards.forEach((card) => {
+        this.updatePlayer(this.currentPlayerSync.addCardToInventory(card));
+      });
 
-    this.playerStackedCards[this.currentPlayerSync.id] = [];
+      this.playerStackedCards[this.currentPlayerSync.id] = [];
+    }
 
     return cards;
+  }
+
+  switchToNextPlayer(): void {
+    const currentOrder = this.currentPlayerSync.order;
+    console.log('switch', this.players.length, currentOrder, this.players[0], this.players[currentOrder - 1]);
+    if (currentOrder === this.players.length) {
+      this.broadcastPlayer(this.players[0]);
+    } else {
+      this.broadcastPlayer(this.players[currentOrder]);
+    }
+  }
+
+  private broadcastPlayer(player: IPlayer): void {
+    console.log('next player is', player);
+    this.currentPlayerSubject.next(player);
+    this.currentPlayerSync = player;
   }
 }

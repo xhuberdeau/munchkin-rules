@@ -49,7 +49,6 @@ export interface ICard {
   category: CardCategories;
   title: string;
   description?: string;
-  isEquipable: boolean;
 }
 
 const traps: CardCategories[] = [
@@ -66,13 +65,18 @@ export interface ITrapCard extends ICard {
   ;
 }
 
-export interface INonEquipableCard extends ICard {
-  isEquipable: false;
+const equipableCards: CardCategories[] = [
+  CardCategories.Race,
+  CardCategories.Class,
+  CardCategories.Equipment
+];
+
+export interface IEquipableCard extends ICard {
+  category: CardCategories.Race
+    | CardCategories.Class
+    | CardCategories.Equipment;
 }
 
-export interface IEquipableCard extends IEffectCard {
-  isEquipable: true;
-}
 
 // card types interfaces
 
@@ -80,8 +84,7 @@ export interface ITreasureCard extends ICard {
   type: CardTypes.Treasure;
 }
 
-export interface IMonsterCard extends INonEquipableCard, ICard {
-  isEquipable: false;
+export interface IMonsterCard extends ICard {
   type: CardTypes.Monster;
   level: number;
   treasureCount: number;
@@ -100,58 +103,51 @@ export interface IEffectCard extends ICard {
 
 // categories card
 
-export interface ICurseCard extends INonEquipableCard, IDXMCard {
-  isEquipable: false;
+export interface ICurseCard extends IDXMCard {
   type: CardTypes.DXM;
   category: CardCategories.Curse;
 }
 
-export interface IMonsterLevelAlterator extends INonEquipableCard, IDXMCard {
-  isEquipable: false;
+export interface IMonsterLevelAlterator extends IDXMCard {
   type: CardTypes.DXM;
   levelModifier: number;
   category: CardCategories.MonsterLevelAlterator;
 }
 
-export interface IPlayerLevelAlterator extends INonEquipableCard, ITreasureCard, IEffectCard {
-  isEquipable: false;
+export interface IPlayerLevelAlterator extends ITreasureCard, IEffectCard {
   type: CardTypes.Treasure;
   category: CardCategories.PlayerLevelAlterator;
   levelModifier: number;
 }
 
-export interface IPlayerPowerAlterator extends INonEquipableCard, ITreasureCard, IEffectCard {
-  isEquipable: false;
+export interface IPlayerPowerAlterator extends ITreasureCard, IEffectCard {
   type: CardTypes.Treasure;
   category: CardCategories.PlayerPowerAlterator;
   powerModifier: number;
 }
 
-export interface IRaceCard extends IDXMCard, IEquipableCard {
+export interface IRaceCard extends IDXMCard {
   type: CardTypes.DXM;
   category: CardCategories.Race;
-  isEquipable: true;
 }
 
-export interface IClassCard extends IDXMCard, IEquipableCard {
+export interface IClassCard extends IDXMCard {
   type: CardTypes.DXM;
   category: CardCategories.Class;
-  isEquipable: true;
 }
 
-export interface IEquipmentCard extends ITreasureCard, IEffectCard, IEquipableCard {
+export interface IEquipmentCard extends ITreasureCard, IEffectCard {
   powerModifier: number;
   type: CardTypes.Treasure;
   category: CardCategories.Equipment;
   bodyPart: BodyParts;
   objectSize: ObjectSizes;
-  isEquipable: true;
 }
 
 export type PlayerSex = 'Homme' | 'Femme';
 
 export type Inventory = ICard[];
-export type EquipedCards = IEffectCard[];
+export type EquipedCards = IEquipableCard[];
 
 export interface IPlayer {
   id: string;
@@ -181,7 +177,7 @@ export interface IPlayer {
   removeCard: (card: ICard) => IPlayer;
 }
 
-export const isEquipableCard = (card: ICard): card is IEquipableCard => card.isEquipable;
+export const isEquipableCard = (card: ICard): card is IEquipableCard => equipableCards.includes(card.category);
 export const isEquipmentCard = (card: ICard): card is IEquipmentCard => card.category === CardCategories.Equipment;
 
 export const isTrapCard = (card: ICard): card is ITrapCard => traps.includes(card.category);

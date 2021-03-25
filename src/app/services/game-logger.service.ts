@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IGeneralLog, ILog, IPlayerLog } from '../game-classes/logs.model';
+import { ILog } from '../game-classes/logs.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,7 @@ export class GameLoggerService {
 
   constructor() { }
 
-  addPlayerLog(log: IPlayerLog): void {
-    this.logsEmitter.emit(log);
-  }
-
-  addGeneralLog(log: IGeneralLog): void {
+  addLog(log: ILog): void {
     this.logsEmitter.emit(log);
   }
 }

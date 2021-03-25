@@ -12,7 +12,6 @@ export abstract class AbstractMonsterCard extends AbstractCard implements IMonst
   ignorePlayerUnderLevel?: number;
   level: number;
   treasureCount: number;
-  isEquipable: false = false;
 
   constructor(cardConfig: Partial<AbstractMonsterCard>) {
     super(cardConfig);

@@ -5,7 +5,7 @@ import {
   ICard, IEffectCard, IEquipableCard,
   IEquipmentCard,
   Inventory,
-  IPlayer, isEquipableCard, isEquipmentCard,
+  IPlayer, isEffectCard, isEquipableCard, isEquipmentCard,
   ObjectSizes,
   PlayerSex,
   Races
@@ -29,7 +29,9 @@ export class Player implements IPlayer {
 
   constructor(playerConfig: Partial<IPlayer>) {
     Object.assign(this, playerConfig);
-    this.id = uuidv4();
+    if (!this.id) {
+      this.id = uuidv4();
+    }
   }
 
   getEquipableCards(): IEquipableCard[] {
@@ -136,8 +138,12 @@ export class Player implements IPlayer {
     this.combatPower -= equipment.powerModifier;
   }
 
-  private useCard(card: IEffectCard): IPlayer {
-     return card.applyEffect(this);
+  private useCard(card: ICard): IPlayer {
+    if (isEffectCard(card)) {
+      return card.applyEffect(this);
+    }
+
+    return this;
   }
 
   private getEquipments(): IEquipmentCard[] {

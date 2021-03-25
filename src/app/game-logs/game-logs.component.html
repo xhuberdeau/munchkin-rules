@@ -1,14 +1,13 @@
 <div class="logs">
   <div class="title">Logs du jeu</div>
   <div class="logs-content">
-    <div class="log" *ngFor="let log of generalLogs">
-      {{ log.message }}
-    </div>
-    <div class="log" *ngFor="let log of playerLogs">
-      <div class="highlighted">
-          {{ log.player.name }}
-      </div>
-      &nbsp;
+    <div class="log" *ngFor="let log of logs">
+      <ng-container *ngIf="log.player">
+        <div class="highlighted">
+            {{ log.player.name }}
+        </div>
+        &nbsp;
+      </ng-container>
       <span [innerHTML]="log.message"></span>
     </div>
   </div>

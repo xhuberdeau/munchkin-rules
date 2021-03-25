@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 export abstract class AbstractCard implements ICard {
   description?: string;
   id: string;
-  isEquipable: boolean;
   title: string;
   type: CardTypes;
   category: CardCategories;

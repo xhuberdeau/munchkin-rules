@@ -4,7 +4,6 @@ import { AbstractTreasureEffectCard } from '../abstract-treasure-effect.card';
 export abstract class AbstractPlayerBoosterCard extends AbstractTreasureEffectCard implements IPlayerPowerAlterator {
   category: CardCategories.PlayerPowerAlterator = CardCategories.PlayerPowerAlterator;
   powerModifier: number;
-  isEquipable: false = false;
 
   constructor(cardConfig: Partial<AbstractPlayerBoosterCard>) {
     super(cardConfig);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ILog, IPlayerLog, isPlayerLog } from '../game-classes/logs.model';
+import { ILog } from '../game-classes/logs.model';
 import { GameLoggerService } from '../services/game-logger.service';
 
 @Component({
@@ -8,17 +8,12 @@ import { GameLoggerService } from '../services/game-logger.service';
   styleUrls: ['./game-logs.component.scss']
 })
 export class GameLogsComponent implements OnInit {
-  generalLogs: ILog[] = [];
-  playerLogs: IPlayerLog[] = [];
+  logs: ILog[] = [];
   constructor(private logger: GameLoggerService) { }
 
   ngOnInit(): void {
     this.logger.logs.subscribe((log) => {
-      if (isPlayerLog(log)) {
-        this.playerLogs = [...this.playerLogs, log];
-      } else {
-        this.generalLogs = [...this.generalLogs, log];
-      }
+        this.logs = [...this.logs, log];
     });
   }
 }

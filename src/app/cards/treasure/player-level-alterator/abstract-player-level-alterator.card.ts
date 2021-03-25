@@ -4,7 +4,6 @@ import { AbstractTreasureEffectCard } from '../abstract-treasure-effect.card';
 export abstract class AbstractPlayerLevelAlteratorCard extends AbstractTreasureEffectCard implements IPlayerLevelAlterator {
   category: CardCategories.PlayerLevelAlterator = CardCategories.PlayerLevelAlterator;
   levelModifier: number;
-  isEquipable: false = false;
 
   constructor(cardConfig: Partial<AbstractPlayerLevelAlteratorCard>) {
     super(cardConfig);

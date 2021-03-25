@@ -1,6 +1,11 @@
 <div class="map">
   <div class="map-tile" (drop)="onDrop($event, tile)" (dragover)="allowDrop($event)" *ngFor="let tile of map" [style]="{'background': tile.color}">
-    {{ tile.name }}
+    <span class="tile-title">
+      {{ tile.name }}
+      <button class="small button" (click)="chooseTile(tile)">Aller dans cette salle</button>
+    </span>
+
+
     <app-small-card [card]="trapCard" *ngFor="let trapCard of trapsByMap[tile.id]"></app-small-card>
   </div>
 </div>

@@ -3,7 +3,6 @@ import { AbstractDxmCard } from '../abstract-dxm.card';
 
 export abstract class AbstractMonsterLevelAlteratorCard extends AbstractDxmCard implements IMonsterLevelAlterator {
   category: CardCategories.MonsterLevelAlterator = CardCategories.MonsterLevelAlterator;
-  isEquipable: false = false;
   levelModifier: number;
   constructor(cardConfig: Partial<AbstractMonsterLevelAlteratorCard>) {
     super(cardConfig);

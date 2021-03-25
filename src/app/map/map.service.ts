@@ -9,6 +9,7 @@ export type TrapEvent = {tile: IMapTile, card: ITrapCard};
   providedIn: 'root'
 })
 export class MapService {
+  private playerRepartition: {[key: string]: IPlayer} = {};
   private $newTrapEvent: EventEmitter<TrapEvent> = new EventEmitter<TrapEvent>(null);
   newTrap = this.$newTrapEvent.asObservable();
   private mapTilesStackedCards: {[key: string]: {owner: string, card: ITrapCard}[]} = {};
@@ -31,5 +32,9 @@ export class MapService {
   placeCardOnMapTile(player: IPlayer, card: ITrapCard, tile: IMapTile): void {
     this.mapTilesStackedCards[tile.id] = [...this.mapTilesStackedCards[tile.id], {owner: player.id, card}];
     this.$newTrapEvent.next({tile, card});
+  }
+
+  placePlayerOnRoom(currentPlayerSync: IPlayer, tile: IMapTile): void {
+    this.playerRepartition[tile.id] = currentPlayerSync;
   }
 }

@@ -34,12 +34,16 @@ export class MapComponent implements OnInit {
       if (isTrapCard(card)) {
         this.eventDispatcherService.dispatchEvent({ type: EventTypes.PlaceCardOnMapTile, card, tile });
       } else {
-        alert('Vous ne pouvez pas placer cette carte dans la salle');
+        alert('Vous ne pouvez pas placer cette carte dans une salle');
       }
     }
   }
 
   allowDrop($event: DragEvent): void {
     $event.preventDefault();
+  }
+
+  chooseTile(tile: IMapTile): void {
+    this.eventDispatcherService.dispatchEvent({ type: EventTypes.ChooseRoom, tile});
   }
 }

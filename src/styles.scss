@@ -10,6 +10,9 @@ html, body {
   cursor: pointer;
   border-radius: 10px;
   border: 1px solid #E1D5BB;
+  &.small {
+    padding: 0.1rem;
+  }
 }
 
 .equipment {

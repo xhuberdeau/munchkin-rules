@@ -4,7 +4,6 @@ import { AbstractDxmCard } from '../abstract-dxm.card';
 export abstract class AbstractCurseCard extends AbstractDxmCard implements ICurseCard {
   category: CardCategories.Curse = CardCategories.Curse;
   title = 'Malédiction !';
-  isEquipable: false = false;
   constructor(cardConfig: Partial<AbstractCurseCard>) {
     super(cardConfig);
   }

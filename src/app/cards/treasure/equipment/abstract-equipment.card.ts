@@ -7,7 +7,6 @@ export abstract class AbstractEquipmentCard extends AbstractTreasureEffectCard i
   category: CardCategories.Equipment = CardCategories.Equipment;
   bodyPart: BodyParts;
   objectSize: ObjectSizes;
-  isEquipable: true = true;
   powerModifier: number;
 
   constructor(cardConfig: Partial<AbstractEquipmentCard>) {
