@@ -46,8 +46,8 @@ export class EventHubService {
 
   private onGameJoin(event: IEvent): void {
     const player = this.playersService.addPlayer(event.playerName, event.playerSex);
-    this.playersService.stackCards(player, this.cardService.drawDxmCards(30));
-    this.playersService.stackCards(player, this.cardService.drawTreasureCards(30));
+    this.playersService.stackCards(player, this.cardService.drawDxmCards(3));
+    this.playersService.stackCards(player, this.cardService.drawTreasureCards(3));
     this.gameLoggerService.addPlayerLog({ type: LogType.Player, player, message: 'a rejoint la partie.'});
   }
 
