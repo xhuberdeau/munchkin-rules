@@ -46,4 +46,8 @@ export class MapComponent implements OnInit {
   chooseTile(tile: IMapTile): void {
     this.eventDispatcherService.dispatchEvent({ type: EventTypes.ChooseRoom, tile});
   }
+
+  roomIsAvailable(tile: IMapTile): boolean {
+    return !this.mapService.isRoomOccupied(tile);
+  }
 }

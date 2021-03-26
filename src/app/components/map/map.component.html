@@ -1,8 +1,9 @@
 <div class="map">
   <div class="map-tile" (drop)="onDrop($event, tile)" (dragover)="allowDrop($event)" *ngFor="let tile of map" [style]="{'background': tile.color}">
     <span class="tile-title">
+      <ng-container *ngIf="!roomIsAvailable(tile)">🔒</ng-container>
       {{ tile.name }}
-      <button class="small button" (click)="chooseTile(tile)">Aller dans cette salle</button>
+      <button class="small button" (click)="chooseTile(tile)" *ngIf="roomIsAvailable(tile)">Aller dans cette salle</button>
     </span>
 
 

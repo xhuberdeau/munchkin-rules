@@ -46,6 +46,10 @@ export class MapService {
     return this.map.find((tile) => tile.id === tileId);
   }
 
+  isRoomOccupied(room: IMapTile): boolean {
+    return this.playerRepartition[room.id] !== undefined;
+  }
+
 
   placePlayerOnRoom(currentPlayerSync: IPlayer, tile: IMapTile): void {
     this.playerRepartition[tile.id] = currentPlayerSync;
