@@ -38,13 +38,16 @@ import { PotionPoisonEnflamme } from './treasure/player-power-booster/potion-poi
 import { PotionSommeilCard } from './treasure/player-power-booster/potion-sommeil.card';
 
 export const treasureCards: ITreasureCard[] = [
+  // equipment
   new ArmureGluanteCard(),
   new ArmureTrapueCard(),
   new BottesHemorroidesCard(),
   new PaperSwordCard(),
+  // level up cards
   new PiecesCard(),
   new PotionMachismeCard(),
   new ReglesObscuresCard(),
+  // combat card
   new CotionPonfusion(),
   new MissileMagique(),
   new PotionBravoure(),
@@ -82,22 +85,15 @@ export const dxmCards: IDXMCard[] = [
   new LoseRacesCard(),
   new LoseShoesCard(),
   new LoseShoesCard(),
+  new LoseShoesCard(),
+  new LoseShoesCard(),
   new LoseSmallEquipmentCard(),
   new LoseSmallEquipmentCard(),
   // monster level alterator
   new BebeCard(),
   new BebeCard(),
-  new BebeCard(),
-  new BebeCard(),
-  new BebeCard(),
   new IntelligentCard(),
   new IntelligentCard(),
-  new IntelligentCard(),
-  new IntelligentCard(),
-  new IntelligentCard(),
-  new VenerableCard(),
-  new VenerableCard(),
-  new VenerableCard(),
   new VenerableCard(),
   new VenerableCard(),
   // races
