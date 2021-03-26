@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPlayer } from '../../../game-classes/game-types.model';
+import { CombatService } from '../../../services/combat.service';
 
 @Component({
   selector: 'app-hero-stats',
@@ -8,9 +9,11 @@ import { IPlayer } from '../../../game-classes/game-types.model';
 })
 export class HeroStatsComponent implements OnInit {
   @Input() player: IPlayer;
-  constructor() { }
+  isCombatMode: boolean;
+  constructor(private combatService: CombatService) { }
 
   ngOnInit(): void {
+    this.combatService.isCombatMode.subscribe((isCombatMode) => this.isCombatMode = isCombatMode);
   }
 
 }
