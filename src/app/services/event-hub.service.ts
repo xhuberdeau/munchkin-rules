@@ -55,6 +55,13 @@ export class EventHubService {
     return `<span class="stand-out-log">${val}</span>`;
   }
 
+  private makePlayerRetrieveStackCards(): void {
+    const addedCards = this.playersService.unstackCurrentPlayerStackedCards();
+    addedCards.forEach((card) => {
+      this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)}`});
+    });
+  }
+
   private onGameJoin(event: IEvent): void {
     const player = this.playersService.addPlayer(event.playerName, event.playerSex);
     this.playersService.stackCards(player, this.cardService.drawDxmCards(3));
@@ -64,6 +71,7 @@ export class EventHubService {
 
   private onGameStart(): void {
     this.gameLoggerService.addLog({ message: 'La partie démarre.'});
+    this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: 'commence son tour'});
     this.router.navigateByUrl('/turn/map');
     this.makePlayerRetrieveStackCards();
   }
@@ -85,36 +93,30 @@ export class EventHubService {
     const tile = event.tile;
     this.mapService.placePlayerOnRoom(this.playersService.currentPlayerSync, tile);
     this.playersService.playerHasPlayed(this.playersService.currentPlayerSync);
+    this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `choisit la ${this.addStandOutLog(tile.name)}`});
     this.playersService.switchToNextPlayer();
     if (this.playersService.playersAreReadyForCombat()) {
       this.router.navigateByUrl('/turn/combat');
     } else {
+      this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: 'commence son tour'});
       this.makePlayerRetrieveStackCards();
     }
   }
 
-  private makePlayerRetrieveStackCards(): void {
-    const addedCards = this.playersService.unstackCurrentPlayerStackedCards();
-    addedCards.forEach((card) => {
-      this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)}`});
-    });
-  }
-
   private onEnterCombat(): void {
-    this.combatService.pickMonster();
+    const monster = this.combatService.pickMonster();
     const room = this.mapService.getRoomByPlayer(this.playersService.currentPlayerSync);
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `commence son combat contre ${this.addStandOutLog(monster.title)} dans la ${this.addStandOutLog(room.name)}`});
     const roomTraps = this.mapService.unstackRoomTraps(room);
     const monsterTraps = roomTraps.filter((isCombatCardTargettedToMonster));
     monsterTraps.forEach((trap) => {
       this.combatService.updateMonster(trap.applyEffect(this.combatService.currentMonsterSync));
-      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est utilisée sur le monstre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
+      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est délenchée sur le monstre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
     });
     const playerTraps = roomTraps.filter((isCombatCardTargettedToPlayer));
     playerTraps.forEach((trap) => {
-      console.log('avant', this.playersService.currentPlayerSync);
       this.playersService.updatePlayer(trap.applyEffect(this.playersService.currentPlayerSync));
-      console.log('après', this.playersService.currentPlayerSync);
-      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est utilisée sur ${this.addStandOutLog(this.playersService.currentPlayerSync.name)}`});
+      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est délenchée sur ${this.addStandOutLog(this.playersService.currentPlayerSync.name)}`});
     });
   }
 }

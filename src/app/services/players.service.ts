@@ -69,7 +69,6 @@ export class PlayersService {
 
   switchToNextPlayer(): void {
     const currentOrder = this.currentPlayerSync.order;
-    console.log('switch', this.players.length, currentOrder, this.players[0], this.players[currentOrder - 1]);
     if (currentOrder === this.players.length) {
       this.broadcastPlayer(this.players[0]);
     } else {

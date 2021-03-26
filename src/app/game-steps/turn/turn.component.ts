@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { PlayersService } from '../../services/players.service';
 import { PlayerAwareComponent } from './player-aware';
 
@@ -8,7 +8,7 @@ import { PlayerAwareComponent } from './player-aware';
   styleUrls: ['./turn.component.scss']
 })
 export class TurnComponent extends PlayerAwareComponent  {
-  constructor(protected playersService: PlayersService) {
-    super(playersService);
+  constructor(protected playersService: PlayersService, protected crd: ChangeDetectorRef) {
+    super(playersService, crd);
   }
 }

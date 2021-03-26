@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IMonsterCard, IPlayer } from '../game-classes/game-types.model';
+import { IMonsterCard } from '../game-classes/game-types.model';
 import { CardService } from './card.service';
 
 @Injectable({
@@ -13,9 +13,11 @@ export class CombatService {
 
   constructor(private cardService: CardService) { }
 
-  pickMonster(): void {
+  pickMonster(): IMonsterCard {
     const monster = this.cardService.drawMonsterCard();
     this.broadcastMonster(monster);
+
+    return monster;
   }
 
   updateMonster(monster: IMonsterCard): IMonsterCard {
