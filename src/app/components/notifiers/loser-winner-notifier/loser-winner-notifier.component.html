@@ -1,0 +1,14 @@
+<div class="game-lost-notifier" *ngIf="showNotification">
+  <div class="backdrop"></div>
+  <div class="content">
+    <div *ngIf="losers.length > 0">
+      Les joueurs suivant sont morts au combat : <div *ngFor="let loser of losers">{{ loser.name }}</div>
+    </div>
+    <div *ngIf="winners.length > 0">
+      Les joueurs suivant sont les heureux sortis du donjon : <div *ngFor="let winner of winners">{{ winner.name }}</div>
+    </div>
+    <button class="button" (click)="close()" *ngIf="!isGameOver">Ok</button>
+    <h1 *ngIf="isGameOver">Fin de la partie</h1>
+  </div>
+</div>
+

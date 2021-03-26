@@ -57,7 +57,7 @@ const traps: CardCategories[] = [
   CardCategories.PlayerLevelAlterator,
   CardCategories.PlayerPowerAlterator];
 
-export interface ITrapCard extends ICard {
+export interface ITrapCard extends IEffectCard {
   category: CardCategories.PlayerPowerAlterator
     | CardCategories.PlayerLevelAlterator
     | CardCategories.Curse
@@ -83,7 +83,7 @@ export interface ICombatCardTargettedToPlayer extends IEffectCard {
 
 export interface ICombatPlayerBooster extends IEffectCard {
   category: CardCategories.PlayerLevelAlterator
-  | CardCategories.PlayerPowerAlterator
+  | CardCategories.PlayerPowerAlterator;
 }
 
 export interface IPlayerLevelBooster extends IEffectCard {
@@ -96,7 +96,7 @@ const equipableCards: CardCategories[] = [
   CardCategories.Equipment
 ];
 
-export interface IEquipableCard extends ICard {
+export interface IEquipableCard extends IEffectCard {
   category: CardCategories.Race
     | CardCategories.Class
     | CardCategories.Equipment;
@@ -172,7 +172,7 @@ export interface IEquipmentCard extends ITreasureCard, IEffectCard {
 
 export type PlayerSex = 'Homme' | 'Femme';
 
-export type Inventory = ICard[];
+export type Inventory = IEffectCard[];
 export type EquipedCards = IEquipableCard[];
 
 export interface IPlayer {

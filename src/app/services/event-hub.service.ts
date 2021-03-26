@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MapService } from '../components/game-steps/turn/map/map.service';
+import { LoserWinnerNotifierService } from '../components/notifiers/loser-winner-notifier/loser-winner-notifier.service';
 import { EventTypes, IEvent } from '../game-classes/events.model';
 import {
   ICombatCardTargettedToMonster,
@@ -28,6 +29,7 @@ export class EventHubService {
     private router: Router,
     private mapService: MapService,
     private combatService: CombatService,
+    private loserWinnerNotifierService: LoserWinnerNotifierService
   ) {
     this.eventDispatcher.events.subscribe((event) => {
       this.treatEvent(event);
@@ -177,8 +179,23 @@ export class EventHubService {
     this.playersService.playerHasCombatted(this.playersService.currentPlayerSync);
     if (this.playersService.allPlayersHaveCombatted()) {
       this.combatService.stopCombatMode();
-      this.playersService.prepareNextTurn();
       this.mapService.resetOccupiedRooms();
+      const playersWhoLost = this.playersService.getPlayersWhoLost();
+      const playersWhoWon = this.playersService.getPlayersWhoWon();
+      playersWhoLost.forEach((player) => {
+        this.gameLoggerService.addLog({player, message: 'a perdu la partie'});
+      });
+      playersWhoWon.forEach((player) => {
+        this.gameLoggerService.addLog({player, message: 'a gagné la partie'});
+      });
+      const isGameOver = this.playersService.isGameOver();
+      this.loserWinnerNotifierService.notifyLosersAndWinners(playersWhoLost, playersWhoWon, isGameOver);
+
+      if (isGameOver) {
+        // end of the game
+        return;
+      }
+      this.playersService.prepareNextTurn();
       this.router.navigateByUrl('/turn/map');
       this.playersService.unstackCurrentPlayerStackedCards();
     } else {

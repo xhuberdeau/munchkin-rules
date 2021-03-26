@@ -1,24 +1,25 @@
 <div class="combat">
   <h1>Vous affrontez</h1>
-  <app-monster-card [monster]="monster"></app-monster-card>
-  <button class="button" (click)="dice()" *ngIf="!hasThrownDice">Lancer le dé et prier pour être boosté à mort</button>
+  <app-monster-card></app-monster-card>
   <div *ngIf="hasThrownDice">Le hasard vous octroie {{ diceValue }}</div>
   <ng-container *ngIf="hasThrownDice">
     <div *ngIf="winning">
       <div>
         Vous battez le monstre !
       </div>
-      <button class="button" (click)="winCombat()">
-        Partir et obtenir ma récompense
-      </button>
     </div>
     <div *ngIf="!winning">
-      <div *ngIf="showTrollMessage">
+      <div *ngIf="showTrollMessage" class="troll-message">
         Bien tenté mais vos efforts sont insignifiants !
       </div>
       <div>Le monstre est plus fort que vous. Tentez quelque chose ou mourrez dans l'oubli.</div>
-      <button class="button" (click)="surrender()">Je suis vaincu</button>
     </div>
   </ng-container>
-
+  <div class="buttons">
+    <button class="button" (click)="dice()" *ngIf="!hasThrownDice">Lancer le dé et prier pour être boosté à mort</button>
+    <button *ngIf="winning" class="button" (click)="winCombat()">
+      Partir et obtenir ma récompense
+    </button>
+    <button class="button" (click)="surrender()">Abandonner ce combat</button>
+  </div>
 </div>

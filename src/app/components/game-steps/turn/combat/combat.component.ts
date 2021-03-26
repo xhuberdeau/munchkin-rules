@@ -12,20 +12,18 @@ import { PlayerAwareComponent } from '../player-aware';
   templateUrl: './combat.component.html',
   styleUrls: ['./combat.component.scss']
 })
-export class CombatComponent extends PlayerAwareComponent implements OnInit {
+export class CombatComponent implements OnInit {
   monster: IMonsterCard;
   hasThrownDice = false;
   diceValue: number;
   winning: boolean;
   showTrollMessage = false;
+  private timeout: any;
 
   constructor(
     private eventDispatcherService: EventDispatcherService,
-    protected playerService: PlayersService,
-    private combatService: CombatService,
-    protected cdr: ChangeDetectorRef) {
-    super(playerService, cdr);
-  }
+    protected playersService: PlayersService,
+    private combatService: CombatService) {}
 
   ngOnInit(): void {
     this.eventDispatcherService.dispatchEvent({ type: EventTypes.EnterCombat });
@@ -35,13 +33,20 @@ export class CombatComponent extends PlayerAwareComponent implements OnInit {
         this.diceValue = null;
         this.winning = null;
         this.showTrollMessage = false;
+        if (this.timeout) {
+          clearTimeout(this.timeout);
+        }
       }
       this.monster = monster;
     });
+
     this.combatService.isPlayerWinning.subscribe((winning) => {
       this.winning = winning;
       this.showTrollMessage = true;
-      setTimeout(() => {this.showTrollMessage = false}, 2000);
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+      }
+      this.timeout = setTimeout(() => {this.showTrollMessage = false}, 2000);
     });
   }
 

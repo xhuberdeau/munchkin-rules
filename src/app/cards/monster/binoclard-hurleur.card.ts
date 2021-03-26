@@ -5,7 +5,7 @@ export class BinoclardHurleurCard extends AbstractMonsterCard {
     super({
       title: 'Binoclard Hurleur',
       treasureCount: 2,
-      level: 60
+      level: 6
     });
   }
 }

@@ -10,12 +10,17 @@ import { EventDispatcherService } from '../../../services/event-dispatcher.servi
   styleUrls: ['./monster-card.component.scss']
 })
 export class MonsterCardComponent implements OnInit {
-  @Input() monster: IMonsterCard;
+  monster: IMonsterCard;
   monsterUrl: string;
-  constructor(private eventDispatcherService: EventDispatcherService, ) {}
+  constructor(private eventDispatcherService: EventDispatcherService, private combatService: CombatService) {}
 
   ngOnInit(): void {
-    this.monsterUrl = `https://www.robohash.org/${Math.random().toString(36).substring(7)}?set=set2`;
+    this.combatService.monster.subscribe((monster) => {
+      if (!this.monster || this.monster.id !== monster.id) {
+        this.monsterUrl = `https://www.robohash.org/${Math.random().toString(36).substring(7)}?set=set2`;
+      }
+      this.monster = monster;
+    });
   }
 
   onDrop($event: DragEvent): void {

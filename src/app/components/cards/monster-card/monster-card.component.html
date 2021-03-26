@@ -1,4 +1,4 @@
-<div class="monster-card" (drop)="onDrop($event)" (dragover)="allowDrop($event)">
+<div class="monster-card" (drop)="onDrop($event)" (dragover)="allowDrop($event)" *ngIf="monster">
   <div class="card-header">
     <div class="name">
       {{ monster.title }}

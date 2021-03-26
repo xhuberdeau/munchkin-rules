@@ -10,6 +10,8 @@ export abstract class AbstractCard implements ICard {
 
   constructor(cardConfig: Partial<ICard>) {
     Object.assign(this, cardConfig);
-    this.id = uuidv4();
+    if (!this.id) {
+      this.id = uuidv4();
+    }
   }
 }

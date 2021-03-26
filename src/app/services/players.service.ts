@@ -19,12 +19,11 @@ export class PlayersService {
   currentPlayer = this.$currentPlayer.asObservable();
   private players: IPlayer[] = [];
 
-  constructor(private playerObtainedCardsService: NewCardsNotifierService) {}
+  constructor(private newCardsNotifier: NewCardsNotifierService) {}
 
   addPlayer(name: string, sex: PlayerSex): IPlayer {
     const newPlayer = new Player({name,
         sex,
-        order: this.players.length + 1,
         inventory: [
     ]});
     this.players = [...this.players, newPlayer];
@@ -57,7 +56,7 @@ export class PlayersService {
   unstackCurrentPlayerStackedCards(): ICard[] {
     const cards = this.playerStackedCards[this.currentPlayerSync.id];
     if (cards && cards.length > 0) {
-      this.playerObtainedCardsService.notifyPlayerNewCards(cards);
+      this.newCardsNotifier.notifyPlayerNewCards(cards);
       cards.forEach((card) => {
         this.updatePlayer(this.currentPlayerSync.addCardToInventory(card));
       });
@@ -69,7 +68,7 @@ export class PlayersService {
   }
 
   switchToNextPlayer(): void {
-    const currentOrder = this.currentPlayerSync.order;
+    const currentOrder = this.players.findIndex((p) => p.id === this.currentPlayerSync.id) + 1;
     if (currentOrder === this.players.length) {
       this.broadcastPlayer(this.players[0]);
     } else {
@@ -99,10 +98,25 @@ export class PlayersService {
   }
 
   prepareNextTurn(): void {
+    this.getPlayersWhoLost().forEach((player) => {
+      this.players = this.players.filter((p) => p.id !== player.id);
+    });
     this.playersHavingCombatted = [];
     this.playersHavingPlayed = [];
     this.broadcastPlayer(this.players[0]);
     this.currentTurn++;
     this.$currentTurn.next(this.currentTurn);
+  }
+
+  getPlayersWhoLost(): IPlayer[] {
+    return this.players.filter((player) => player.health === 0);
+  }
+
+  getPlayersWhoWon(): IPlayer[] {
+    return this.players.filter((player) => player.level === 10 && player.health > 0);
+  }
+
+  isGameOver(): boolean {
+    return this.getPlayersWhoLost().length === this.players.length || this.getPlayersWhoWon().length > 0;
   }
 }

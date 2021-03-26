@@ -11,6 +11,7 @@ import { GameLogsComponent } from './components/HUD/game-logs/game-logs.componen
 import { MapComponent } from './components/game-steps/turn/map/map.component';
 import { TurnComponent } from './components/game-steps/turn/turn.component';
 import { EquipedCardsComponent } from './components/HUD/equiped-cards/equiped-cards.component';
+import { LoserWinnerNotifierComponent } from './components/notifiers/loser-winner-notifier/loser-winner-notifier.component';
 import { NewCardsNotifierComponent } from './components/notifiers/new-cards-notifier/new-cards-notifier.component';
 import { SmallCardComponent } from './components/cards/small-card/small-card.component';
 import { HeroStatsComponent } from './components/HUD/hero-stats/hero-stats.component';
@@ -34,6 +35,7 @@ import { MonsterCardComponent } from './components/cards/monster-card/monster-ca
     CombatComponent,
     PlayerCardComponent,
     MonsterCardComponent,
+    LoserWinnerNotifierComponent,
   ],
   imports: [
     BrowserModule,

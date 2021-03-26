@@ -5,7 +5,7 @@ export class LepreuxchaunCard extends AbstractMonsterCard {
     super({
       title: 'Lepreuxchaun',
       treasureCount: 2,
-      level: 40
+      level: 4
     });
   }
 }

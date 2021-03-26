@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EventTypes } from '../../../../game-classes/events.model';
-import { isTrapCard, ITrapCard } from '../../../../game-classes/game-types.model';
+import { IPlayer, isTrapCard, ITrapCard } from '../../../../game-classes/game-types.model';
 import { IMapTile, MapType } from '../../../../game-classes/map.model';
 import { EventDispatcherService } from '../../../../services/event-dispatcher.service';
+import { PlayersService } from '../../../../services/players.service';
 import { MapService } from './map.service';
 
 @Component({
@@ -12,13 +13,20 @@ import { MapService } from './map.service';
 })
 export class MapComponent implements OnInit {
   map: MapType = [];
+  private player: IPlayer;
   trapsByMap: {[key: string]: ITrapCard[]} = {};
-  constructor(private mapService: MapService, private eventDispatcherService: EventDispatcherService) { }
+  constructor(private mapService: MapService, private eventDispatcherService: EventDispatcherService, private playersService: PlayersService) { }
 
   ngOnInit(): void {
     this.map = this.mapService.map;
-    this.map.forEach((tile) => {
-      this.trapsByMap[tile.id] = [];
+    this.prepareTrapsBuMapTiles();
+
+    this.playersService.currentPlayer.subscribe((player) => {
+      if (player.id !== this.player?.id) {
+        // reset traps map to hide traps from other players
+        this.prepareTrapsBuMapTiles();
+        this.player = player;
+      }
     });
 
     this.mapService.newTrap.subscribe((trap) => {
@@ -49,5 +57,11 @@ export class MapComponent implements OnInit {
 
   roomIsAvailable(tile: IMapTile): boolean {
     return !this.mapService.isRoomOccupied(tile);
+  }
+
+  private prepareTrapsBuMapTiles(): void {
+    this.map.forEach((tile) => {
+      this.trapsByMap[tile.id] = [];
+    });
   }
 }
