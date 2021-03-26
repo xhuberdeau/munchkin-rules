@@ -29,12 +29,32 @@ export class MapService {
     });
   }
 
-  placeCardOnMapTile(player: IPlayer, card: ITrapCard, tile: IMapTile): void {
+  placeTrapOnMapTile(player: IPlayer, card: ITrapCard, tile: IMapTile): void {
     this.mapTilesStackedCards[tile.id] = [...this.mapTilesStackedCards[tile.id], {owner: player.id, card}];
     this.$newTrapEvent.next({tile, card});
   }
 
+  getRoomByPlayer(player: IPlayer): IMapTile {
+    const tileId = Object.entries(this.playerRepartition).reduce((acc, [mapTileId, playerInRoom]) => {
+      if (player.id === playerInRoom.id) {
+        return mapTileId;
+      }
+
+      return acc;
+    }, null);
+
+    return this.map.find((tile) => tile.id === tileId);
+  }
+
+
   placePlayerOnRoom(currentPlayerSync: IPlayer, tile: IMapTile): void {
     this.playerRepartition[tile.id] = currentPlayerSync;
+  }
+
+  unstackRoomTraps(room: IMapTile): ITrapCard[] {
+    const traps = this.mapTilesStackedCards[room.id].map((trapEvent) => trapEvent.card);
+    this.mapTilesStackedCards[room.id] = [];
+
+    return traps;
   }
 }

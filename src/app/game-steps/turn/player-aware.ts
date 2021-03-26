@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IPlayer } from '../../game-classes/game-types.model';
 import { PlayersService } from '../../services/players.service';
 
@@ -10,7 +10,7 @@ export abstract class PlayerAwareComponent implements OnInit {
   protected constructor(protected playersService: PlayersService) { }
 
   ngOnInit(): void {
-    this.playersService.currentPlayer.subscribe((p) => {
+     this.playersService.currentPlayer.subscribe((p) => {
       this.player = p;
     });
   }

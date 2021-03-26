@@ -14,6 +14,7 @@ import { EquipedCardsComponent } from './equiped-cards/equiped-cards.component';
 import { NewCardsNotifierComponent } from './new-cards-notifier/new-cards-notifier.component';
 import { SmallCardComponent } from './small-card/small-card.component';
 import { HeroStatsComponent } from './hero-stats/hero-stats.component';
+import { CombatComponent } from './game-steps/turn/combat/combat.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { HeroStatsComponent } from './hero-stats/hero-stats.component';
     NewCardsNotifierComponent,
     SmallCardComponent,
     HeroStatsComponent,
+    CombatComponent,
   ],
   imports: [
     BrowserModule,

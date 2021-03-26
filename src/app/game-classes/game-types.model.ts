@@ -65,6 +65,22 @@ export interface ITrapCard extends ICard {
   ;
 }
 
+export interface ICombatCardTargettedToMonster extends IEffectCard {
+  category: CardCategories.MonsterLevelAlterator;
+}
+
+
+const playerTraps: CardCategories[] = [
+  CardCategories.Curse,
+  CardCategories.PlayerLevelAlterator,
+  CardCategories.PlayerPowerAlterator];
+
+export interface ICombatCardTargettedToPlayer extends IEffectCard {
+  category: CardCategories.PlayerLevelAlterator
+  | CardCategories.PlayerPowerAlterator
+  | CardCategories.Curse;
+}
+
 const equipableCards: CardCategories[] = [
   CardCategories.Race,
   CardCategories.Class,
@@ -180,6 +196,9 @@ export interface IPlayer {
 
 export const isEquipableCard = (card: ICard): card is IEquipableCard => equipableCards.includes(card.category);
 export const isEquipmentCard = (card: ICard): card is IEquipmentCard => card.category === CardCategories.Equipment;
+
+export const isCombatCardTargettedToMonster = (card: ICard): card is ICombatCardTargettedToMonster => card.category === CardCategories.MonsterLevelAlterator;
+export const isCombatCardTargettedToPlayer = (card: ICard): card is ICombatCardTargettedToPlayer => playerTraps.includes(card.category);
 
 export const isTrapCard = (card: ICard): card is ITrapCard => traps.includes(card.category);
 export const isEffectCard = (card: ICard): card is IEffectCard => (card as IEffectCard).effectDescription !== undefined;

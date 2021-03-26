@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventTypes, IEvent } from '../game-classes/events.model';
-import { ITrapCard } from '../game-classes/game-types.model';
+import { isCombatCardTargettedToMonster, isCombatCardTargettedToPlayer, isMonsterCard, ITrapCard } from '../game-classes/game-types.model';
 import { MapService } from '../map/map.service';
 import { CardService } from './card.service';
+import { CombatService } from './combat.service';
 import { EventDispatcherService } from './event-dispatcher.service';
 import { GameLoggerService } from './game-logger.service';
 import { PlayersService } from './players.service';
@@ -20,6 +21,7 @@ export class EventHubService {
     private cardService: CardService,
     private router: Router,
     private mapService: MapService,
+    private combatService: CombatService,
   ) {
     this.eventDispatcher.events.subscribe((event) => {
       this.treatEvent(event);
@@ -43,6 +45,9 @@ export class EventHubService {
       case EventTypes.ChooseRoom:
         this.onRoomChosen(event);
         break;
+      case EventTypes.EnterCombat:
+        this.onEnterCombat();
+        break;
     }
   }
 
@@ -60,10 +65,7 @@ export class EventHubService {
   private onGameStart(): void {
     this.gameLoggerService.addLog({ message: 'La partie démarre.'});
     this.router.navigateByUrl('/turn/map');
-    const addedCards = this.playersService.unstackCurrentPlayerStackedCards();
-    addedCards.forEach((card) => {
-      this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)}`});
-    });
+    this.makePlayerRetrieveStackCards();
   }
 
   private onCardEquip(event: IEvent): void {
@@ -75,19 +77,44 @@ export class EventHubService {
   private onCardPlacedOnMapTile(event: IEvent): void {
     const card = this.cardService.findCardById(event.card.id);
     this.playersService.updatePlayer(this.playersService.currentPlayerSync.removeCard(card));
-    this.mapService.placeCardOnMapTile(this.playersService.currentPlayerSync, card as ITrapCard, event.tile);
+    this.mapService.placeTrapOnMapTile(this.playersService.currentPlayerSync, card as ITrapCard, event.tile);
     this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a placé la carte ${this.addStandOutLog(card.title)} dans la ${this.addStandOutLog(event.tile.name)}`});
   }
 
   private onRoomChosen(event: IEvent): void {
     const tile = event.tile;
     this.mapService.placePlayerOnRoom(this.playersService.currentPlayerSync, tile);
+    this.playersService.playerHasPlayed(this.playersService.currentPlayerSync);
     this.playersService.switchToNextPlayer();
+    if (this.playersService.playersAreReadyForCombat()) {
+      this.router.navigateByUrl('/turn/combat');
+    } else {
+      this.makePlayerRetrieveStackCards();
+    }
+  }
+
+  private makePlayerRetrieveStackCards(): void {
     const addedCards = this.playersService.unstackCurrentPlayerStackedCards();
     addedCards.forEach((card) => {
       this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)}`});
     });
-    // todo: launch combat if it was last player to choose room
   }
 
+  private onEnterCombat(): void {
+    this.combatService.pickMonster();
+    const room = this.mapService.getRoomByPlayer(this.playersService.currentPlayerSync);
+    const roomTraps = this.mapService.unstackRoomTraps(room);
+    const monsterTraps = roomTraps.filter((isCombatCardTargettedToMonster));
+    monsterTraps.forEach((trap) => {
+      this.combatService.updateMonster(trap.applyEffect(this.combatService.currentMonsterSync));
+      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est utilisée sur le monstre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
+    });
+    const playerTraps = roomTraps.filter((isCombatCardTargettedToPlayer));
+    playerTraps.forEach((trap) => {
+      console.log('avant', this.playersService.currentPlayerSync);
+      this.playersService.updatePlayer(trap.applyEffect(this.playersService.currentPlayerSync));
+      console.log('après', this.playersService.currentPlayerSync);
+      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est utilisée sur ${this.addStandOutLog(this.playersService.currentPlayerSync.name)}`});
+    });
+  }
 }

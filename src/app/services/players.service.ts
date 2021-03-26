@@ -8,6 +8,7 @@ import { NewCardsNotifierService } from '../new-cards-notifier/new-cards-notifie
   providedIn: 'root'
 })
 export class PlayersService {
+  private playersHavingPlayed: IPlayer[] = [];
   private playerStackedCards: {[key: string]: ICard[]} = {};
   currentPlayerSync: IPlayer;
   private currentPlayerSubject: ReplaySubject<IPlayer> = new ReplaySubject<IPlayer>(1);
@@ -18,6 +19,9 @@ export class PlayersService {
 
   addPlayer(name: string, sex: PlayerSex): IPlayer {
     const newPlayer = new Player({name,
+      level: 8,
+      power: 8,
+      combatPower: 8,
         sex,
         order: this.players.length + 1,
         inventory: [
@@ -34,7 +38,7 @@ export class PlayersService {
   updatePlayer(player: IPlayer): IPlayer {
     const playerIndex = this.players.findIndex((p) => p.name === player.name);
     this.players[playerIndex] = player;
-    if (this.currentPlayerSync.name === player.name) {
+    if (this.currentPlayerSync.id === player.id) {
       this.broadcastPlayer(player);
     }
 
@@ -74,8 +78,15 @@ export class PlayersService {
   }
 
   private broadcastPlayer(player: IPlayer): void {
-    console.log('next player is', player);
     this.currentPlayerSubject.next(player);
     this.currentPlayerSync = player;
+  }
+
+  playersAreReadyForCombat(): boolean {
+    return this.playersHavingPlayed.length === this.players.length;
+  }
+
+  playerHasPlayed(player: IPlayer): void {
+    this.playersHavingPlayed = [...this.playersHavingPlayed, player];
   }
 }
