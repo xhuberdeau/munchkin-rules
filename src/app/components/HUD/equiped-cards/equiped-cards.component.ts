@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventTypes } from '../../../game-classes/events.model';
 import { IPlayer, isEquipableCard } from '../../../game-classes/game-types.model';
 import { CombatService } from '../../../services/combat.service';
 import { EventDispatcherService } from '../../../services/event-dispatcher.service';
+import { PlayersService } from '../../../services/players.service';
 
 @Component({
   selector: 'app-equiped-cards',
@@ -10,12 +11,13 @@ import { EventDispatcherService } from '../../../services/event-dispatcher.servi
   styleUrls: ['./equiped-cards.component.scss']
 })
 export class EquipedCardsComponent implements OnInit {
-  @Input() player: IPlayer;
+  player: IPlayer;
   isCombatMode: boolean;
-  constructor(private eventDispatcherService: EventDispatcherService, private combatService: CombatService) { }
+  constructor(private eventDispatcherService: EventDispatcherService, private combatService: CombatService, private playersService: PlayersService) { }
 
   ngOnInit(): void {
     this.combatService.isCombatMode.subscribe((isCombatMode) => this.isCombatMode = isCombatMode);
+    this.playersService.currentPlayer.subscribe((player) => this.player = player);
   }
 
   onDrop($event: DragEvent): void {

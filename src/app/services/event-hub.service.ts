@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { MapService } from '../components/game-steps/turn/map/map.service';
 import { EventTypes, IEvent } from '../game-classes/events.model';
-import { isCombatCardTargettedToMonster, isCombatCardTargettedToPlayer, isMonsterCard, ITrapCard } from '../game-classes/game-types.model';
-import { MapService } from '../components/map/map.service';
+import {
+  ICombatCardTargettedToMonster,
+  isCombatCardTargettedToMonster,
+  isCombatCardTargettedToPlayer,
+  ITrapCard
+} from '../game-classes/game-types.model';
 import { CardService } from './card.service';
 import { CombatService } from './combat.service';
 import { EventDispatcherService } from './event-dispatcher.service';
@@ -47,6 +52,15 @@ export class EventHubService {
         break;
       case EventTypes.EnterCombat:
         this.onEnterCombat();
+        break;
+      case EventTypes.ThrowCombatDice:
+        this.onCombatDiceThrown(event);
+        break;
+      case EventTypes.WinCombat:
+        this.onCombatWon();
+        break;
+      case EventTypes.UseCombatCardOnMonster:
+        this.onCombatCardUsedOnMonster(event);
         break;
     }
   }
@@ -119,5 +133,38 @@ export class EventHubService {
       this.playersService.updatePlayer(trap.applyEffect(this.playersService.currentPlayerSync));
       this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est délenchée sur ${this.addStandOutLog(this.playersService.currentPlayerSync.name)}`});
     });
+  }
+
+  private onCombatDiceThrown(event: IEvent): void {
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.alterCombatPower(event.diceValue));
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `augmente son attaque pour le combat de ${this.addStandOutLog(event.diceValue)}`});
+    this.combatService.broadcastIsPlayerWinning(this.playersService.currentPlayerSync, this.combatService.currentMonsterSync);
+  }
+
+  private onCombatWon(): void {
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.earnLevel());
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.resetCombatPower());
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `gagne son combat contre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: 'gagne 1 niveau'});
+    this.playersService.stackCards(this.playersService.currentPlayerSync, this.cardService.drawTreasureCards(this.combatService.currentMonsterSync.treasureCount));
+    this.playersService.playerHasCombatted(this.playersService.currentPlayerSync);
+
+    if (this.playersService.allPlayersHaveCombatted()) {
+      this.combatService.stopCombatMode();
+      this.playersService.prepareNextTurn();
+      this.mapService.resetOccupiedRooms();
+      this.router.navigateByUrl('/turn/map');
+      this.playersService.unstackCurrentPlayerStackedCards();
+    } else {
+      this.playersService.switchToNextPlayer();
+      this.router.navigateByUrl('/turn/combat');
+      this.onEnterCombat();
+    }
+  }
+
+  private onCombatCardUsedOnMonster(event: IEvent): void {
+    const { card, monster } = event;
+    this.combatService.updateMonster((card as ICombatCardTargettedToMonster).applyEffect(monster));
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `utilise ${this.addStandOutLog(card.title)} sur ${this.addStandOutLog(monster.title)}`});
   }
 }

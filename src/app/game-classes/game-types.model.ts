@@ -192,6 +192,7 @@ export interface IPlayer {
   alterPower: (powerModifier: number) => IPlayer;
   alterCombatPower: (powerModifier: number) => IPlayer;
   removeCard: (card: ICard) => IPlayer;
+  resetCombatPower: () => IPlayer;
 }
 
 export const isEquipableCard = (card: ICard): card is IEquipableCard => equipableCards.includes(card.category);

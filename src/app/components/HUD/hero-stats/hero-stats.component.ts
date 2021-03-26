@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IPlayer } from '../../../game-classes/game-types.model';
 import { CombatService } from '../../../services/combat.service';
+import { PlayersService } from '../../../services/players.service';
 
 @Component({
   selector: 'app-hero-stats',
@@ -8,12 +9,15 @@ import { CombatService } from '../../../services/combat.service';
   styleUrls: ['./hero-stats.component.scss']
 })
 export class HeroStatsComponent implements OnInit {
-  @Input() player: IPlayer;
+  player: IPlayer;
   isCombatMode: boolean;
-  constructor(private combatService: CombatService) { }
+  currentTurn: number;
+  constructor(private combatService: CombatService, private playersService: PlayersService) { }
 
   ngOnInit(): void {
     this.combatService.isCombatMode.subscribe((isCombatMode) => this.isCombatMode = isCombatMode);
+    this.playersService.currentTurnObs.subscribe((currentTurn) => this.currentTurn = currentTurn);
+    this.playersService.currentPlayer.subscribe((player) => this.player = player);
   }
 
 }

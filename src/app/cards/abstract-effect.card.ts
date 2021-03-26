@@ -1,5 +1,4 @@
-import { CardTypes, ICard, IEffectCard } from '../game-classes/game-types.model';
-import { v4 as uuidv4 } from 'uuid';
+import { IEffectCard } from '../game-classes/game-types.model';
 import { AbstractCard } from './abstract-card.class';
 
 export abstract class AbstractEffectCard extends AbstractCard implements IEffectCard {

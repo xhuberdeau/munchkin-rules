@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventTypes } from '../../game-classes/events.model';
-import { isTrapCard, ITrapCard } from '../../game-classes/game-types.model';
-import { IMapTile, MapType } from '../../game-classes/map.model';
-import { EventDispatcherService } from '../../services/event-dispatcher.service';
+import { EventTypes } from '../../../../game-classes/events.model';
+import { isTrapCard, ITrapCard } from '../../../../game-classes/game-types.model';
+import { IMapTile, MapType } from '../../../../game-classes/map.model';
+import { EventDispatcherService } from '../../../../services/event-dispatcher.service';
 import { MapService } from './map.service';
 
 @Component({

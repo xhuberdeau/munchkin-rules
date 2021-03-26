@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CreatePlayersComponent } from './components/game-steps/create-players/create-players.component';
 import { CombatComponent } from './components/game-steps/turn/combat/combat.component';
 import { TurnComponent } from './components/game-steps/turn/turn.component';
-import { MapComponent } from './components/map/map.component';
+import { MapComponent } from './components/game-steps/turn/map/map.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/create-players', pathMatch: 'full' },
@@ -27,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy', onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

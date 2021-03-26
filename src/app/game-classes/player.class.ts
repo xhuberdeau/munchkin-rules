@@ -153,4 +153,13 @@ export class Player implements IPlayer {
   removeCard(card: ICard): IPlayer {
     return new Player({...this, inventory: this.inventory.filter((c) => c.id !== card.id)});
   }
+
+  resetCombatPower(): IPlayer {
+    const bonusFromEquipment = this.getEquipments().reduce((acc, equipment) => {
+      return acc + equipment.powerModifier;
+    }, 0);
+    const combatPower = this.level + bonusFromEquipment;
+
+    return new Player({...this, combatPower});
+  }
 }

@@ -87,8 +87,17 @@ export const dxmCards: IDXMCard[] = [
   // monster level alterator
   new BebeCard(),
   new BebeCard(),
+  new BebeCard(),
+  new BebeCard(),
+  new BebeCard(),
   new IntelligentCard(),
   new IntelligentCard(),
+  new IntelligentCard(),
+  new IntelligentCard(),
+  new IntelligentCard(),
+  new VenerableCard(),
+  new VenerableCard(),
+  new VenerableCard(),
   new VenerableCard(),
   new VenerableCard(),
   // races

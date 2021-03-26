@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject, } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, } from 'rxjs';
 import { ICard, IPlayer, PlayerSex } from '../game-classes/game-types.model';
 import { Player } from '../game-classes/player.class';
 import { NewCardsNotifierService } from '../components/notifiers/new-cards-notifier/new-cards-notifier.service';
@@ -8,11 +8,15 @@ import { NewCardsNotifierService } from '../components/notifiers/new-cards-notif
   providedIn: 'root'
 })
 export class PlayersService {
+  private currentTurn = 1;
+  private $currentTurn: BehaviorSubject<number> = new BehaviorSubject<number>(this.currentTurn);
+  currentTurnObs = this.$currentTurn.asObservable();
   private playersHavingPlayed: IPlayer[] = [];
+  private playersHavingCombatted: IPlayer[] = [];
   private playerStackedCards: {[key: string]: ICard[]} = {};
   currentPlayerSync: IPlayer;
-  private currentPlayerSubject: ReplaySubject<IPlayer> = new ReplaySubject<IPlayer>(1);
-  currentPlayer = this.currentPlayerSubject.asObservable();
+  private $currentPlayer: BehaviorSubject<IPlayer> = new BehaviorSubject<IPlayer>(null);
+  currentPlayer = this.$currentPlayer.asObservable();
   private players: IPlayer[] = [];
 
   constructor(private playerObtainedCardsService: NewCardsNotifierService) {}
@@ -77,7 +81,7 @@ export class PlayersService {
   }
 
   private broadcastPlayer(player: IPlayer): void {
-    this.currentPlayerSubject.next(player);
+    this.$currentPlayer.next(player);
     this.currentPlayerSync = player;
   }
 
@@ -87,5 +91,21 @@ export class PlayersService {
 
   playerHasPlayed(player: IPlayer): void {
     this.playersHavingPlayed = [...this.playersHavingPlayed, player];
+  }
+
+  playerHasCombatted(currentPlayerSync: IPlayer): void {
+    this.playersHavingCombatted = [...this.playersHavingCombatted, currentPlayerSync];
+  }
+
+  allPlayersHaveCombatted(): boolean {
+    return this.players.length === this.playersHavingCombatted.length;
+  }
+
+  prepareNextTurn(): void {
+    this.playersHavingCombatted = [];
+    this.playersHavingPlayed = [];
+    this.broadcastPlayer(this.players[0]);
+    this.currentTurn++;
+    this.$currentTurn.next(this.currentTurn);
   }
 }

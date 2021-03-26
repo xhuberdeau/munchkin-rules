@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IPlayer, ITrapCard } from '../../game-classes/game-types.model';
-import { IMapTile, MapType } from '../../game-classes/map.model';
+import { IPlayer, ITrapCard } from '../../../../game-classes/game-types.model';
+import { IMapTile, MapType } from '../../../../game-classes/map.model';
 import { v4 as uuidv4 } from 'uuid';
 
 export type TrapEvent = {tile: IMapTile, card: ITrapCard};
@@ -60,5 +60,9 @@ export class MapService {
     this.mapTilesStackedCards[room.id] = [];
 
     return traps;
+  }
+
+  resetOccupiedRooms(): void {
+    this.playerRepartition = {};
   }
 }

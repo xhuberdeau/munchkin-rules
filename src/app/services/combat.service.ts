@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IMonsterCard } from '../game-classes/game-types.model';
+import { IMonsterCard, IPlayer } from '../game-classes/game-types.model';
 import { CardService } from './card.service';
 
 @Injectable({
@@ -10,9 +10,13 @@ export class CombatService {
   private $isCombatMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isCombatMode = this.$isCombatMode.asObservable();
 
+  private $isPlayerWinning: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isPlayerWinning = this.$isPlayerWinning.asObservable();
+
   currentMonsterSync: IMonsterCard;
   private $monster: BehaviorSubject<IMonsterCard> = new BehaviorSubject<IMonsterCard>(null);
   monster = this.$monster.asObservable();
+
 
   constructor(private cardService: CardService) { }
 
@@ -25,6 +29,7 @@ export class CombatService {
   }
 
   pickMonster(): IMonsterCard {
+    this.$isPlayerWinning.next(false);
     const monster = this.cardService.drawMonsterCard();
     this.broadcastMonster(monster);
 
@@ -35,6 +40,13 @@ export class CombatService {
     this.broadcastMonster(monster);
 
     return monster;
+  }
+
+  broadcastIsPlayerWinning(player: IPlayer, monster: IMonsterCard): boolean {
+    const winning = player.combatPower > monster.level;
+    this.$isPlayerWinning.next(winning);
+
+    return winning;
   }
 
   private broadcastMonster(monster: IMonsterCard): void {

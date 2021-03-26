@@ -8,7 +8,7 @@ import { CardComponent } from './components/cards/card/card.component';
 import { InventoryComponent } from './components/HUD/inventory/inventory.component';
 import { CreatePlayersComponent } from './components/game-steps/create-players/create-players.component';
 import { GameLogsComponent } from './components/HUD/game-logs/game-logs.component';
-import { MapComponent } from './components/map/map.component';
+import { MapComponent } from './components/game-steps/turn/map/map.component';
 import { TurnComponent } from './components/game-steps/turn/turn.component';
 import { EquipedCardsComponent } from './components/HUD/equiped-cards/equiped-cards.component';
 import { NewCardsNotifierComponent } from './components/notifiers/new-cards-notifier/new-cards-notifier.component';

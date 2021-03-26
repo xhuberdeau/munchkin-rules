@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPlayer } from '../../../game-classes/game-types.model';
+import { PlayersService } from '../../../services/players.service';
 
 @Component({
   selector: 'app-inventory',
@@ -7,10 +8,11 @@ import { IPlayer } from '../../../game-classes/game-types.model';
   styleUrls: ['./inventory.component.scss']
 })
 export class InventoryComponent implements OnInit {
-  @Input() player: IPlayer | undefined;
-  constructor() { }
+  player: IPlayer;
+  constructor(private playersService: PlayersService) { }
 
   ngOnInit(): void {
+    this.playersService.currentPlayer.subscribe((player) => this.player = player);
   }
 
   onDragStart($event: DragEvent, card): void {
