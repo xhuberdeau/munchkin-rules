@@ -5,7 +5,6 @@ export class MissileMagique extends AbstractPlayerBoosterCard {
     super({
       title: 'Missile magique',
       description: 'À jouer pendant n\'importe quel combat. +5 au joueur. Usage unique',
-      effectDescription: '+5',
       powerModifier: 5
     });
   }

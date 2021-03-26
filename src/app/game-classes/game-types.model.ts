@@ -81,6 +81,15 @@ export interface ICombatCardTargettedToPlayer extends IEffectCard {
   | CardCategories.Curse;
 }
 
+export interface ICombatPlayerBooster extends IEffectCard {
+  category: CardCategories.PlayerLevelAlterator
+  | CardCategories.PlayerPowerAlterator
+}
+
+export interface IPlayerLevelBooster extends IEffectCard {
+  category: CardCategories.PlayerLevelAlterator;
+}
+
 const equipableCards: CardCategories[] = [
   CardCategories.Race,
   CardCategories.Class,
@@ -92,6 +101,7 @@ export interface IEquipableCard extends ICard {
     | CardCategories.Class
     | CardCategories.Equipment;
 }
+
 
 
 // card types interfaces
@@ -193,6 +203,7 @@ export interface IPlayer {
   alterCombatPower: (powerModifier: number) => IPlayer;
   removeCard: (card: ICard) => IPlayer;
   resetCombatPower: () => IPlayer;
+  loseLife: () => IPlayer;
 }
 
 export const isEquipableCard = (card: ICard): card is IEquipableCard => equipableCards.includes(card.category);
@@ -200,7 +211,8 @@ export const isEquipmentCard = (card: ICard): card is IEquipmentCard => card.cat
 
 export const isCombatCardTargettedToMonster = (card: ICard): card is ICombatCardTargettedToMonster => card.category === CardCategories.MonsterLevelAlterator;
 export const isCombatCardTargettedToPlayer = (card: ICard): card is ICombatCardTargettedToPlayer => playerTraps.includes(card.category);
+export const isCombatPlayerBoosterCard = (card: ICard): card is ICombatPlayerBooster => card.category === CardCategories.PlayerPowerAlterator || card.category === CardCategories.PlayerLevelAlterator;
+export const isPlayerLevelBoostCard = (card: ICard): card is IPlayerLevelBooster => card.category === CardCategories.PlayerLevelAlterator;
 
 export const isTrapCard = (card: ICard): card is ITrapCard => traps.includes(card.category);
 export const isEffectCard = (card: ICard): card is IEffectCard => (card as IEffectCard).effectDescription !== undefined;
-export const isMonsterCard = (card: ICard): card is IMonsterCard => card.type === CardTypes.Monster;

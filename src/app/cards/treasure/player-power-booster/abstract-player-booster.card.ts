@@ -7,6 +7,7 @@ export abstract class AbstractPlayerBoosterCard extends AbstractTreasureEffectCa
 
   constructor(cardConfig: Partial<AbstractPlayerBoosterCard>) {
     super(cardConfig);
+    this.effectDescription = `([COMBAT] +${this.powerModifier} attaque au joueur)`;
   }
 
   applyEffect(player: IPlayer): IPlayer {

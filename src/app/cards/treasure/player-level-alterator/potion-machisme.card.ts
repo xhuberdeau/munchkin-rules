@@ -5,7 +5,7 @@ export class PotionMachismeCard extends AbstractPlayerLevelAlteratorCard {
     super({
       title: 'Potion de machisme triomphant',
       description: '+1 niveau',
-      levelModifier: 1
+      levelModifier: 1,
     });
   }
 }

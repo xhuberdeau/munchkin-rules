@@ -5,7 +5,7 @@ export class MrNonosCard extends AbstractMonsterCard {
     super({
       title: 'Mr. Nonos',
       treasureCount: 1,
-      level: 2
+      level: 20
     });
   }
 }

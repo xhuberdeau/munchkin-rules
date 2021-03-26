@@ -7,9 +7,11 @@ export enum EventTypes {
   LeaveCombat = 'leaveCombat',
   UseCombatCardOnMonster = 'useCombatCardOnMonster',
   UseCombatCardOnPlayer = 'useCombatCardOnPlayer',
+  UsePlayerLevelBooster = 'usePlayerLevelBooster',
   PlaceCardOnMapTile = 'placeCardOnMapTile',
   ThrowCombatDice = 'throwCombatDice',
   WinCombat = 'winCombat',
+  LoseCombat = 'loseCombat',
 }
 
 export interface IEvent {

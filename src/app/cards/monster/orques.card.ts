@@ -5,7 +5,7 @@ export class OrquesCard extends AbstractMonsterCard {
     super({
       title: '3872 Orques',
       treasureCount: 3,
-      level: 10
+      level: 100
     });
   }
 }

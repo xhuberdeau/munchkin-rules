@@ -7,6 +7,7 @@ export abstract class AbstractPlayerLevelAlteratorCard extends AbstractTreasureE
 
   constructor(cardConfig: Partial<AbstractPlayerLevelAlteratorCard>) {
     super(cardConfig);
+    this.effectDescription = `(+${this.levelModifier} lvl au joueur)`;
   }
 
   applyEffect(player: IPlayer): IPlayer {

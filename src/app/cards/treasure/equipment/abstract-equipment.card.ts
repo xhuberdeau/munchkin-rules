@@ -1,7 +1,5 @@
-import { BodyParts, CardCategories, CardTypes, IEquipmentCard, IPlayer, ObjectSizes } from '../../../game-classes/game-types.model';
-import { AbstractEffectCard } from '../../abstract-effect.card';
+import { BodyParts, CardCategories, IEquipmentCard, IPlayer, ObjectSizes } from '../../../game-classes/game-types.model';
 import { AbstractTreasureEffectCard } from '../abstract-treasure-effect.card';
-import { AbstractTreasureCard } from '../abstract-treasure.card';
 
 export abstract class AbstractEquipmentCard extends AbstractTreasureEffectCard implements IEquipmentCard {
   category: CardCategories.Equipment = CardCategories.Equipment;
@@ -11,6 +9,7 @@ export abstract class AbstractEquipmentCard extends AbstractTreasureEffectCard i
 
   constructor(cardConfig: Partial<AbstractEquipmentCard>) {
     super(cardConfig);
+    this.effectDescription = `(+${this.powerModifier} attaque au joueur)`;
   }
 
   applyEffect(player: IPlayer): IPlayer {

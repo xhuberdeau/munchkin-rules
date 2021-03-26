@@ -5,7 +5,6 @@ export class ArmureTrapueCard extends AbstractEquipmentCard {
   constructor() {
     super({
       title: 'Armure Trapue',
-      effectDescription: '+3 attaque',
       bodyPart: BodyParts.Armor,
       objectSize: ObjectSizes.Small,
       powerModifier: 3

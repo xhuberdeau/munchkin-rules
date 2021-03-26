@@ -5,7 +5,6 @@ export class CotionPonfusion extends AbstractPlayerBoosterCard {
     super({
       title: 'Cotion de ponfusion',
       description: 'À jouer pendant n\'imquorte pel combat. +3 au zoueur. Usique unage',
-      effectDescription: '+3',
       powerModifier: 3
     });
   }

@@ -29,7 +29,7 @@ export class EquipedCardsComponent implements OnInit {
       } else if (isEquipableCard(card)) {
         this.eventDispatcherService.dispatchEvent({type: EventTypes.EquipCard, card});
       } else {
-        alert('Vous ne pouvez pas équiper cette carte');
+        alert('Vous ne pouvez équiper que des équipements, classes ou races');
       }
     }
   }

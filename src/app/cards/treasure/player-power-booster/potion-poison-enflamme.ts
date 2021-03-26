@@ -5,7 +5,6 @@ export class PotionPoisonEnflamme extends AbstractPlayerBoosterCard {
     super({
       title: 'Potion de poison enflammé',
       description: 'À jouer pendant n\'importe quel combat. +3 au joueur. Usage unique',
-      effectDescription: '+3',
       powerModifier: 3
     });
   }

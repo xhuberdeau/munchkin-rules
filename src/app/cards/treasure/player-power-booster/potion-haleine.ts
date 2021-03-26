@@ -5,7 +5,6 @@ export class PotionHaleine extends AbstractPlayerBoosterCard {
     super({
       title: 'Potion de mauvaise haleine',
       description: 'À jouer pendant n\'importe quel combat. +2 au joueur. Usage unique',
-      effectDescription: '+2',
       powerModifier: 2
     });
   }

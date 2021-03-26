@@ -3,7 +3,7 @@ import { AbstractCurseCard } from './abstract-curse.card';
 
 export class LoseSmallEquipmentCard extends AbstractCurseCard {
   constructor() {
-    super({title: 'Malédiction !\nPetite perte', description: 'Perdez un petit objet aléatoire'});
+    super({title: 'Malédiction !\nPetite perte', description: 'Perdez un petit objet aléatoire', effectDescription: '(perd un objet)'});
   }
 
   applyEffect(player: IPlayer): IPlayer {

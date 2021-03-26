@@ -5,7 +5,6 @@ export class BottesHemorroidesCard extends AbstractEquipmentCard {
   constructor() {
     super({
       title: 'Bottes de convocation d\'Hémorroïdes',
-      effectDescription: '+2 attaque',
       bodyPart: BodyParts.Shoes,
       objectSize: ObjectSizes.Small,
       powerModifier: 2,

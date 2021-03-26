@@ -34,7 +34,7 @@ export class MapComponent implements OnInit {
       if (isTrapCard(card)) {
         this.eventDispatcherService.dispatchEvent({ type: EventTypes.PlaceCardOnMapTile, card, tile });
       } else {
-        alert('Vous ne pouvez pas placer cette carte dans une salle');
+        alert('Seules les malédictions et les cartes [COMBAT] peuvent être placées dans une salle');
       }
     }
   }

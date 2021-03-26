@@ -162,4 +162,8 @@ export class Player implements IPlayer {
 
     return new Player({...this, combatPower});
   }
+
+  loseLife(): IPlayer {
+    return new Player({...this, health: this.health - 1});
+  }
 }

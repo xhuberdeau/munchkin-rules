@@ -25,7 +25,7 @@ export class MonsterCardComponent implements OnInit {
       if (isCombatCardTargettedToMonster(card)) {
         this.eventDispatcherService.dispatchEvent({type: EventTypes.UseCombatCardOnMonster, card, monster: this.monster});
       } else {
-        alert('Vous ne pouvez pas utiliser cette carte sur le monstre');
+        alert('Seules les cartes combat destinées au monstre peuvent être jouées ici');
       }
     }
   }

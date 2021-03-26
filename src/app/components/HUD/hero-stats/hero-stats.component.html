@@ -1,9 +1,12 @@
-<div class="hero-stats">
+<div class="hero-stats" (drop)="onDrop($event)" (dragover)="allowDrop($event)">
   <div class="life">
     {{ player.health }} ❤️
   </div>
   <div class="name">
-    <ng-container *ngIf="isCombatMode">⚔️</ng-container> Joueur {{ player.name }} - Niveau {{ player.level }} (tour {{ currentTurn }})
+    <img src="https://avalonfrance.com/image/cache/data/060_so-600x840.jpg" />
+    <div>
+      <ng-container *ngIf="isCombatMode">⚔️</ng-container> Joueur {{ player.name }} - Niveau {{ player.level }} (tour {{ currentTurn }})
+    </div>
   </div>
   <div class="power">
     Attaque : {{ player.combatPower}}

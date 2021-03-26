@@ -23,9 +23,6 @@ export class PlayersService {
 
   addPlayer(name: string, sex: PlayerSex): IPlayer {
     const newPlayer = new Player({name,
-      level: 8,
-      power: 8,
-      combatPower: 8,
         sex,
         order: this.players.length + 1,
         inventory: [

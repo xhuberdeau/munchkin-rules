@@ -30,10 +30,12 @@ export class CombatComponent extends PlayerAwareComponent implements OnInit {
   ngOnInit(): void {
     this.eventDispatcherService.dispatchEvent({ type: EventTypes.EnterCombat });
     this.combatService.monster.subscribe((monster) => {
-      this.hasThrownDice = false;
-      this.diceValue = null;
-      this.winning = null;
-      this.showTrollMessage = false;
+      if (!this.monster || this.monster.id !== monster.id) {
+        this.hasThrownDice = false;
+        this.diceValue = null;
+        this.winning = null;
+        this.showTrollMessage = false;
+      }
       this.monster = monster;
     });
     this.combatService.isPlayerWinning.subscribe((winning) => {
@@ -49,7 +51,11 @@ export class CombatComponent extends PlayerAwareComponent implements OnInit {
     this.hasThrownDice = true;
   }
 
-  winCombat() {
+  winCombat(): void {
     this.eventDispatcherService.dispatchEvent({ type: EventTypes.WinCombat });
+  }
+
+  surrender(): void {
+    this.eventDispatcherService.dispatchEvent({ type: EventTypes.LoseCombat });
   }
 }

@@ -5,7 +5,7 @@ export class MucusBaveuxCard extends AbstractMonsterCard {
     super({
       title: 'Mucus Baveux',
       treasureCount: 1,
-      level: 1
+      level: 10
     });
   }
 }

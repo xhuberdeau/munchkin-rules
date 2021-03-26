@@ -5,7 +5,7 @@ export class PitbullCard extends AbstractMonsterCard {
     super({
       title: 'Pit Bull',
       treasureCount: 1,
-      level: 2
+      level: 20
     });
   }
 }

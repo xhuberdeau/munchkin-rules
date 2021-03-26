@@ -3,7 +3,7 @@ import { AbstractCurseCard } from './abstract-curse.card';
 
 export class LoseArmorCard extends AbstractCurseCard {
   constructor() {
-    super({description: 'Perdez l\'armure que vous portez'});
+    super({description: 'Perdez l\'armure que vous portez', effectDescription: '(perd son armure)'});
   }
 
   applyEffect(player: IPlayer): IPlayer {

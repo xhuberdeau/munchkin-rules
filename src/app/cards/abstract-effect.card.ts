@@ -2,7 +2,7 @@ import { IEffectCard } from '../game-classes/game-types.model';
 import { AbstractCard } from './abstract-card.class';
 
 export abstract class AbstractEffectCard extends AbstractCard implements IEffectCard {
-  effectDescription: string;
+  effectDescription = '';
 
   constructor(cardConfig: Partial<IEffectCard>) {
     super(cardConfig);

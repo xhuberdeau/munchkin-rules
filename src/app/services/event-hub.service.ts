@@ -4,6 +4,7 @@ import { MapService } from '../components/game-steps/turn/map/map.service';
 import { EventTypes, IEvent } from '../game-classes/events.model';
 import {
   ICombatCardTargettedToMonster,
+  IEffectCard,
   isCombatCardTargettedToMonster,
   isCombatCardTargettedToPlayer,
   ITrapCard
@@ -59,8 +60,17 @@ export class EventHubService {
       case EventTypes.WinCombat:
         this.onCombatWon();
         break;
+      case EventTypes.LoseCombat:
+        this.onCombatLost();
+        break;
       case EventTypes.UseCombatCardOnMonster:
         this.onCombatCardUsedOnMonster(event);
+        break;
+      case EventTypes.UsePlayerLevelBooster:
+        this.onPlayerLevelBooster(event);
+        break;
+      case EventTypes.UseCombatCardOnPlayer:
+        this.onCombatCardUsedOnPlayer(event);
         break;
     }
   }
@@ -71,9 +81,15 @@ export class EventHubService {
 
   private makePlayerRetrieveStackCards(): void {
     const addedCards = this.playersService.unstackCurrentPlayerStackedCards();
-    addedCards.forEach((card) => {
-      this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)}`});
+    addedCards.forEach((card: IEffectCard) => {
+      this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a obtenu la carte ${this.addStandOutLog(card.title)} ${this.addStandOutLog(card.effectDescription)}`});
     });
+  }
+  private useCardOnPlayer(event: IEvent): void {
+    const card = this.cardService.findCardById(event.card.id) as IEffectCard;
+    this.playersService.updatePlayer(card.applyEffect(this.playersService.currentPlayerSync));
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.removeCard(card));
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `utilise ${this.addStandOutLog(card.title)} ${this.addStandOutLog(card.effectDescription)}`});
   }
 
   private onGameJoin(event: IEvent): void {
@@ -93,14 +109,14 @@ export class EventHubService {
   private onCardEquip(event: IEvent): void {
     const card = this.cardService.findCardById(event.card.id);
     this.playersService.updatePlayer(this.playersService.currentPlayerSync.equipCard(card));
-    this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a équipé la carte ${this.addStandOutLog(card.title)}`});
+    this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a équipé la carte ${this.addStandOutLog(card.title)} ${this.addStandOutLog((card as IEffectCard).effectDescription)}`});
   }
 
   private onCardPlacedOnMapTile(event: IEvent): void {
     const card = this.cardService.findCardById(event.card.id);
     this.playersService.updatePlayer(this.playersService.currentPlayerSync.removeCard(card));
     this.mapService.placeTrapOnMapTile(this.playersService.currentPlayerSync, card as ITrapCard, event.tile);
-    this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a placé la carte ${this.addStandOutLog(card.title)} dans la ${this.addStandOutLog(event.tile.name)}`});
+    this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: `a placé la carte ${this.addStandOutLog(card.title)} ${this.addStandOutLog((card as IEffectCard).effectDescription)} dans la ${this.addStandOutLog(event.tile.name)} ${this.addStandOutLog((card as IEffectCard).effectDescription)}`});
   }
 
   private onRoomChosen(event: IEvent): void {
@@ -126,12 +142,12 @@ export class EventHubService {
     const monsterTraps = roomTraps.filter((isCombatCardTargettedToMonster));
     monsterTraps.forEach((trap) => {
       this.combatService.updateMonster(trap.applyEffect(this.combatService.currentMonsterSync));
-      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est délenchée sur le monstre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
+      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} ${this.addStandOutLog(trap.effectDescription)} est délenchée sur le monstre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
     });
     const playerTraps = roomTraps.filter((isCombatCardTargettedToPlayer));
     playerTraps.forEach((trap) => {
       this.playersService.updatePlayer(trap.applyEffect(this.playersService.currentPlayerSync));
-      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} est délenchée sur ${this.addStandOutLog(this.playersService.currentPlayerSync.name)}`});
+      this.gameLoggerService.addLog({message: `La carte piège ${this.addStandOutLog(trap.title)} ${this.addStandOutLog(trap.effectDescription)} est délenchée sur ${this.addStandOutLog(this.playersService.currentPlayerSync.name)}`});
     });
   }
 
@@ -147,8 +163,18 @@ export class EventHubService {
     this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `gagne son combat contre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
     this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: 'gagne 1 niveau'});
     this.playersService.stackCards(this.playersService.currentPlayerSync, this.cardService.drawTreasureCards(this.combatService.currentMonsterSync.treasureCount));
-    this.playersService.playerHasCombatted(this.playersService.currentPlayerSync);
+    this.doNextStepsAfterCombat();
+  }
 
+  private onCombatLost(): void {
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.loseLife());
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `perd son combat contre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: 'perd 1 ❤️'});
+    this.doNextStepsAfterCombat();
+  }
+
+  private doNextStepsAfterCombat(): void {
+    this.playersService.playerHasCombatted(this.playersService.currentPlayerSync);
     if (this.playersService.allPlayersHaveCombatted()) {
       this.combatService.stopCombatMode();
       this.playersService.prepareNextTurn();
@@ -163,8 +189,19 @@ export class EventHubService {
   }
 
   private onCombatCardUsedOnMonster(event: IEvent): void {
-    const { card, monster } = event;
-    this.combatService.updateMonster((card as ICombatCardTargettedToMonster).applyEffect(monster));
-    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `utilise ${this.addStandOutLog(card.title)} sur ${this.addStandOutLog(monster.title)}`});
+    const card = this.cardService.findCardById(event.card.id) as IEffectCard;
+    this.combatService.updateMonster((card as ICombatCardTargettedToMonster).applyEffect(event.monster));
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.removeCard(card));
+    this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `utilise ${this.addStandOutLog(card.title)} ${this.addStandOutLog(card.effectDescription)} sur ${this.addStandOutLog(event.monster.title)}`});
+    this.combatService.broadcastIsPlayerWinning(this.playersService.currentPlayerSync, this.combatService.currentMonsterSync);
+  }
+
+  private onPlayerLevelBooster(event: IEvent): void {
+    this.useCardOnPlayer(event);
+  }
+
+  private onCombatCardUsedOnPlayer(event: IEvent): void {
+    this.useCardOnPlayer(event);
+    this.combatService.broadcastIsPlayerWinning(this.playersService.currentPlayerSync, this.combatService.currentMonsterSync);
   }
 }
