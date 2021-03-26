@@ -4,17 +4,19 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CardComponent } from './card/card.component';
-import { InventoryComponent } from './inventory/inventory.component';
-import { CreatePlayersComponent } from './game-steps/create-players/create-players.component';
-import { GameLogsComponent } from './game-logs/game-logs.component';
-import { MapComponent } from './map/map.component';
-import { TurnComponent } from './game-steps/turn/turn.component';
-import { EquipedCardsComponent } from './equiped-cards/equiped-cards.component';
-import { NewCardsNotifierComponent } from './new-cards-notifier/new-cards-notifier.component';
-import { SmallCardComponent } from './small-card/small-card.component';
-import { HeroStatsComponent } from './hero-stats/hero-stats.component';
-import { CombatComponent } from './game-steps/turn/combat/combat.component';
+import { CardComponent } from './components/cards/card/card.component';
+import { InventoryComponent } from './components/HUD/inventory/inventory.component';
+import { CreatePlayersComponent } from './components/game-steps/create-players/create-players.component';
+import { GameLogsComponent } from './components/HUD/game-logs/game-logs.component';
+import { MapComponent } from './components/map/map.component';
+import { TurnComponent } from './components/game-steps/turn/turn.component';
+import { EquipedCardsComponent } from './components/HUD/equiped-cards/equiped-cards.component';
+import { NewCardsNotifierComponent } from './components/notifiers/new-cards-notifier/new-cards-notifier.component';
+import { SmallCardComponent } from './components/cards/small-card/small-card.component';
+import { HeroStatsComponent } from './components/HUD/hero-stats/hero-stats.component';
+import { CombatComponent } from './components/game-steps/turn/combat/combat.component';
+import { PlayerCardComponent } from './components/cards/player-card/player-card.component';
+import { MonsterCardComponent } from './components/cards/monster-card/monster-card.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { CombatComponent } from './game-steps/turn/combat/combat.component';
     SmallCardComponent,
     HeroStatsComponent,
     CombatComponent,
+    PlayerCardComponent,
+    MonsterCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject, } from 'rxjs';
 import { ICard, IPlayer, PlayerSex } from '../game-classes/game-types.model';
 import { Player } from '../game-classes/player.class';
-import { NewCardsNotifierService } from '../new-cards-notifier/new-cards-notifier.service';
+import { NewCardsNotifierService } from '../components/notifiers/new-cards-notifier/new-cards-notifier.service';
 
 @Injectable({
   providedIn: 'root'

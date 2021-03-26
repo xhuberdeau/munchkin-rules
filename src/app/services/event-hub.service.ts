@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventTypes, IEvent } from '../game-classes/events.model';
 import { isCombatCardTargettedToMonster, isCombatCardTargettedToPlayer, isMonsterCard, ITrapCard } from '../game-classes/game-types.model';
-import { MapService } from '../map/map.service';
+import { MapService } from '../components/map/map.service';
 import { CardService } from './card.service';
 import { CombatService } from './combat.service';
 import { EventDispatcherService } from './event-dispatcher.service';

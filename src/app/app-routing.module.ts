@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CreatePlayersComponent } from './game-steps/create-players/create-players.component';
-import { CombatComponent } from './game-steps/turn/combat/combat.component';
-import { TurnComponent } from './game-steps/turn/turn.component';
-import { MapComponent } from './map/map.component';
+import { CreatePlayersComponent } from './components/game-steps/create-players/create-players.component';
+import { CombatComponent } from './components/game-steps/turn/combat/combat.component';
+import { TurnComponent } from './components/game-steps/turn/turn.component';
+import { MapComponent } from './components/map/map.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/create-players', pathMatch: 'full' },
