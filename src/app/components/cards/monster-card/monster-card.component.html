@@ -1,1 +1,14 @@
-<p>monster-card works!</p>
+<div class="monster-card">
+  <div class="card-header">
+    <div class="name">
+      {{ monster.title }}
+    </div>
+    <div class="level">
+      lvl {{ monster.level }}
+    </div>
+  </div>
+  <img [src]="monsterUrl" />
+  <div class="reward">
+    {{ monster.treasureCount }} 🎁
+  </div>
+</div>

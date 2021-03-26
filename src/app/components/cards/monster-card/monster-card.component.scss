@@ -1,0 +1,32 @@
+.monster-card {
+  border-radius: 10px;
+  border: 6px solid red;
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+  display: flex;
+  width: 20rem;
+  height: 20rem;
+
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid red;
+    font-size: 1rem;
+
+    .name {
+      font-weight: bold;
+    }
+  }
+
+  .reward {
+    align-self: end;
+  }
+
+  img {
+    height: 50%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+}
