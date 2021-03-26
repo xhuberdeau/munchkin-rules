@@ -159,7 +159,6 @@ export class EventHubService {
 
   private onCombatWon(): void {
     this.playersService.updatePlayer(this.playersService.currentPlayerSync.earnLevel());
-    this.playersService.updatePlayer(this.playersService.currentPlayerSync.resetCombatPower());
     this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: `gagne son combat contre ${this.addStandOutLog(this.combatService.currentMonsterSync.title)}`});
     this.gameLoggerService.addLog({player: this.playersService.currentPlayerSync, message: 'gagne 1 niveau'});
     this.playersService.stackCards(this.playersService.currentPlayerSync, this.cardService.drawTreasureCards(this.combatService.currentMonsterSync.treasureCount));
@@ -174,6 +173,7 @@ export class EventHubService {
   }
 
   private doNextStepsAfterCombat(): void {
+    this.playersService.updatePlayer(this.playersService.currentPlayerSync.resetCombatPower());
     this.playersService.playerHasCombatted(this.playersService.currentPlayerSync);
     if (this.playersService.allPlayersHaveCombatted()) {
       this.combatService.stopCombatMode();
