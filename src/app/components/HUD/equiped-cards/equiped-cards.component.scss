@@ -1,4 +1,9 @@
 .equiped-cards {
   border-right: 1px solid red;
   height: 100%;
+
+  &.greyed-out {
+    background: lightgrey;
+    opacity: 0.5;
+  }
 }

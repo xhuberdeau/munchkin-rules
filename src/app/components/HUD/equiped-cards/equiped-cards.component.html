@@ -1,4 +1,4 @@
-<div class="equiped-cards" (drop)="onDrop($event)" (dragover)="allowDrop($event)">
+<div class="equiped-cards" (drop)="onDrop($event)" (dragover)="allowDrop($event)" [ngClass]="{'greyed-out': isCombatMode}">
   <div class="">Cartes équipées</div>
   <app-small-card [card]="card" *ngFor="let card of player.equipedCards"></app-small-card>
 </div>

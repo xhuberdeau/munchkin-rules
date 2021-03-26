@@ -97,6 +97,7 @@ export class EventHubService {
     this.playersService.switchToNextPlayer();
     if (this.playersService.playersAreReadyForCombat()) {
       this.router.navigateByUrl('/turn/combat');
+      this.combatService.startCombatMode();
     } else {
       this.gameLoggerService.addLog({ player: this.playersService.currentPlayerSync, message: 'commence son tour'});
       this.makePlayerRetrieveStackCards();

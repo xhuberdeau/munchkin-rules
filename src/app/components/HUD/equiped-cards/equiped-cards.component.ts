@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventTypes } from '../../../game-classes/events.model';
 import { IPlayer, isEquipableCard } from '../../../game-classes/game-types.model';
+import { CombatService } from '../../../services/combat.service';
 import { EventDispatcherService } from '../../../services/event-dispatcher.service';
 
 @Component({
@@ -10,16 +11,20 @@ import { EventDispatcherService } from '../../../services/event-dispatcher.servi
 })
 export class EquipedCardsComponent implements OnInit {
   @Input() player: IPlayer;
-  constructor(private eventDispatcherService: EventDispatcherService ) { }
+  isCombatMode: boolean;
+  constructor(private eventDispatcherService: EventDispatcherService, private combatService: CombatService) { }
 
   ngOnInit(): void {
+    this.combatService.isCombatMode.subscribe((isCombatMode) => this.isCombatMode = isCombatMode);
   }
 
   onDrop($event: DragEvent): void {
     const data = $event.dataTransfer.getData('text/plain');
     if (data) {
       const card = JSON.parse(data);
-      if (isEquipableCard(card)) {
+      if (this.isCombatMode) {
+        alert('Impossible d\'équiper cette carte : vous êtes en combat');
+      } else if (isEquipableCard(card)) {
         this.eventDispatcherService.dispatchEvent({type: EventTypes.EquipCard, card});
       } else {
         alert('Vous ne pouvez pas équiper cette carte');

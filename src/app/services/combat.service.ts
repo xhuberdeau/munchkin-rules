@@ -7,11 +7,22 @@ import { CardService } from './card.service';
   providedIn: 'root'
 })
 export class CombatService {
+  private $isCombatMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isCombatMode = this.$isCombatMode.asObservable();
+
   currentMonsterSync: IMonsterCard;
   private $monster: BehaviorSubject<IMonsterCard> = new BehaviorSubject<IMonsterCard>(null);
   monster = this.$monster.asObservable();
 
   constructor(private cardService: CardService) { }
+
+  startCombatMode(): void {
+    this.$isCombatMode.next(true);
+  }
+
+  stopCombatMode(): void {
+    this.$isCombatMode.next(false);
+  }
 
   pickMonster(): IMonsterCard {
     const monster = this.cardService.drawMonsterCard();
